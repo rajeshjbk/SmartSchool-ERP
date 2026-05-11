@@ -2,6 +2,8 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
+import com.raj.schoolerp.entity.StudentStatus;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -28,9 +30,6 @@ public class StudentsDTO {
 	private String academicYear;
 	
 	@NonNull
-	private LocalDate admissionDate;
-	
-	@NonNull
-	private String studentStatus;
+	private StudentStatus studentStatus;
   
 }

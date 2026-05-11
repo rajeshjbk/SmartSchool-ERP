@@ -13,7 +13,7 @@ public interface TeachersService  {
     Teachers addTeacher(TeachersDTO teacherDTO) throws TeachersException;
 
     // Update Teacher
-    Teachers updateTeacher(Long teacherId, Teachers teacher) throws TeachersException;
+    Teachers updateTeacher(Long teacherId, TeachersDTO teacher) throws TeachersException;
 
     // Delete Teacher
     void deleteTeacher(Long teacherId) throws TeachersException;

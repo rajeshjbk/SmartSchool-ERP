@@ -55,7 +55,7 @@ public class ExamSubjects {
 	@NonNull
 	private Integer passMarks;
 	
-	@CreationTimestamp
+	@NonNull
 	private LocalTime startTime;
 	
 	@NonNull

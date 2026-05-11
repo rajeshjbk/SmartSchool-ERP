@@ -62,7 +62,6 @@ public class LeaveApplications {
 	@JoinColumn(name = "approvedBy")
 	private Users approvedBy;
 	
-	@NonNull
 	private String rejectionNote;
 	
 	@CreationTimestamp

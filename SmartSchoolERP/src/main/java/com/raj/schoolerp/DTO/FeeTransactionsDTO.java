@@ -2,6 +2,11 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
+import com.raj.schoolerp.entity.FeeTransactionStatus;
+import com.raj.schoolerp.entity.PaymentMode;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,13 +29,11 @@ public class FeeTransactionsDTO {
 	private Double amountPaid;
 	
 	@NonNull
-	private LocalDate paymentDate;
-	
-	@NonNull
 	private LocalDate dueDate;
 	
 	@NonNull
-	private String paymentMode;
+	@Enumerated(EnumType.STRING)
+	private PaymentMode paymentMode;
 	
 	@NonNull
 	private String transactionId;
@@ -39,11 +42,12 @@ public class FeeTransactionsDTO {
 	private String recieptNo;
 	
 	@NonNull
-	private String  feeTransactionStatus;
+	@Enumerated(EnumType.STRING)
+	private FeeTransactionStatus  feeTransactionStatus;
 	
 	@NonNull
 	private String academicYear;
 	
-	private Integer collectedBy;
+	private String collectedBy;
 	
 }

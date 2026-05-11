@@ -56,9 +56,10 @@ public class Notices {
 	
 
 	@CreationTimestamp
+	@Column(updatable = false)
 	private LocalDate publishDate;
 	
-	@UpdateTimestamp
+	@NonNull
 	private LocalDate expiryDate;
 	
 	@NonNull

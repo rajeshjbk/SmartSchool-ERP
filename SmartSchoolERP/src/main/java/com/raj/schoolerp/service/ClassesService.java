@@ -2,16 +2,17 @@ package com.raj.schoolerp.service;
 
 import java.util.List;
 
+import com.raj.schoolerp.DTO.ClassesDTO;
 import com.raj.schoolerp.entity.Classes;
 import com.raj.schoolerp.exception.ClassesException;
 
 public interface ClassesService {
 
 	// Add Class
-	Classes addClass(Classes classes) throws ClassesException;
+	Classes addClass(ClassesDTO classesDTO) throws ClassesException;
 
 	// Update Class
-	Classes updateClass(Long classId, Classes classes) throws ClassesException;
+	Classes updateClass(Long classId, ClassesDTO classesDTO) throws ClassesException;
 
 	// Delete Class
 	void deleteClass(Long classId) throws ClassesException;

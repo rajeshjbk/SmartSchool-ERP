@@ -50,7 +50,8 @@ public class FeeTransactions {
 	@NonNull
 	private Double amountPaid;
 	
-	@NonNull
+	@CreationTimestamp
+	@Column(updatable = false)
 	private LocalDate paymentDate;
 	
 	@NonNull
@@ -74,7 +75,7 @@ public class FeeTransactions {
 	private String academicYear;
 	
 	@NonNull
-	private Integer collectedBy;
+	private String collectedBy;
 	
 	@CreationTimestamp
 	@Column(insertable = false)

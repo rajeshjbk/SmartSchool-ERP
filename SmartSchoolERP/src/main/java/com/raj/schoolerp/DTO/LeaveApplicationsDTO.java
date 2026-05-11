@@ -3,6 +3,10 @@ package com.raj.schoolerp.DTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.raj.schoolerp.entity.LeaveStatus;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +15,9 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class LeaveApplicationsDTO {
 
-	
 	@NonNull
 	private String leaveType;
 	
@@ -32,12 +34,7 @@ public class LeaveApplicationsDTO {
 	private String reason;
 	
 	@NonNull
-	private String  leaveStatus ;
+	@Enumerated(EnumType.STRING)
+	private LeaveStatus leaveStatus ;
 	
-	@NonNull
-	private String rejectionNote;
-	
-	private LocalDateTime appliedOn;
-	
-	private LocalDateTime approvedOn;
 }

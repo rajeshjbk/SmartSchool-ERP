@@ -2,9 +2,11 @@ package com.raj.schoolerp.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.raj.schoolerp.DTO.ClassesDTO;
 import com.raj.schoolerp.entity.Classes;
 import com.raj.schoolerp.exception.ClassesException;
 import com.raj.schoolerp.repository.ClassesRepository;
@@ -18,30 +20,29 @@ public class ClassesServiceImpl implements ClassesService {
 
 	// Add Class
 	@Override
-	public Classes addClass(Classes classes) throws ClassesException {
+	public Classes addClass(ClassesDTO classesDTO) throws ClassesException {
 
-		boolean exists = classesRepository.existsByClassNameAndSection(classes.getClassName(), classes.getSection());
+		boolean exists = classesRepository.existsByClassNameAndSection(classesDTO.getClassName(), classesDTO.getSection());
 
 		if (exists) {
-			throw new ClassesException("Class already exists with section: " + classes.getSection());
+			throw new ClassesException("Class already exists with section: " + classesDTO.getSection());
 		}
 
-		return classesRepository.save(classes);
+		Classes newClass = new Classes();
+		
+		BeanUtils.copyProperties(classesDTO, newClass);
+		
+		return classesRepository.save(newClass);
 	}
 
 	// Update Class
 	@Override
-	public Classes updateClass(Long classId, Classes updatedClass) throws ClassesException {
+	public Classes updateClass(Long classId, ClassesDTO updatedClassesDTO) throws ClassesException {
 
 		Classes existingClass = classesRepository.findById(classId)
 				.orElseThrow(() -> new ClassesException("Class not found with id: " + classId));
 
-		existingClass.setClassName(updatedClass.getClassName());
-		existingClass.setSection(updatedClass.getSection());
-		existingClass.setAcademicYear(updatedClass.getAcademicYear());
-		existingClass.setRoomNo(updatedClass.getRoomNo());
-		existingClass.setCapacity(updatedClass.getCapacity());
-		existingClass.setTeacher(updatedClass.getTeacher());
+		BeanUtils.copyProperties(updatedClassesDTO,existingClass);
 
 		return classesRepository.save(existingClass);
 	}

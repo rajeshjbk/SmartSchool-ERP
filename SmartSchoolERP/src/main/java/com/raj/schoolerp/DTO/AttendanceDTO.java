@@ -1,29 +1,23 @@
 package com.raj.schoolerp.DTO;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import com.raj.schoolerp.entity.AttendanceStatus;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class AttendanceDTO {
 
 	@NonNull
-	private Date date;
-	
-	@NonNull
-	private String attendanceStatus;
+	@Enumerated(EnumType.STRING)
+	private AttendanceStatus attendanceStatus;
 	
 	@NonNull
 	private String remarks;
-	
-	private LocalDateTime createdAt;
-	
 }

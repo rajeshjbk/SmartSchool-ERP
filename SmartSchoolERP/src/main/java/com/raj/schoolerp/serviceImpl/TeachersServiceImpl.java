@@ -2,9 +2,11 @@ package com.raj.schoolerp.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.raj.schoolerp.DTO.TeachersDTO;
 import com.raj.schoolerp.entity.TeacherStatus;
 import com.raj.schoolerp.entity.Teachers;
 import com.raj.schoolerp.exception.TeachersException;
@@ -19,35 +21,28 @@ public class TeachersServiceImpl implements TeachersService {
 
 	// Add Teacher
 	@Override
-	public Teachers addTeacher(Teachers teacher) throws TeachersException {
+	public Teachers addTeacher(TeachersDTO teacherDTO) throws TeachersException {
 
-		boolean exists = teacherRepository.existsByEmployeeId(teacher.getEmployeeId());
+		boolean exists = teacherRepository.existsByEmployeeId(teacherDTO.getEmployeeId());
 
 		if (exists) {
-			throw new TeachersException("Teacher already exists with Employee Id: " + teacher.getEmployeeId());
+			throw new TeachersException("Teacher already exists with Employee Id: " + teacherDTO.getEmployeeId());
 		}
+
+		Teachers teacher = new Teachers();
+		BeanUtils.copyProperties(teacherDTO, teacher);
 
 		return teacherRepository.save(teacher);
 	}
 
 	// Update Teacher
 	@Override
-	public Teachers updateTeacher(Long teacherId, Teachers updatedTeacher) throws TeachersException {
+	public Teachers updateTeacher(Long teacherId, TeachersDTO updatedTeacherDTO) throws TeachersException {
 
 		Teachers teacher = teacherRepository.findById(teacherId)
 				.orElseThrow(() -> new TeachersException("Teacher not found with id: " + teacherId));
 
-		teacher.setDepartment(updatedTeacher.getDepartment());
-
-		teacher.setDesignation(updatedTeacher.getDesignation());
-
-		teacher.setSalary(updatedTeacher.getSalary());
-
-		teacher.setQualification(updatedTeacher.getQualification());
-
-		teacher.setTeacherStatus(updatedTeacher.getTeacherStatus());
-
-		teacher.setUser(updatedTeacher.getUser());
+		BeanUtils.copyProperties(updatedTeacherDTO, teacher);
 
 		return teacherRepository.save(teacher);
 	}

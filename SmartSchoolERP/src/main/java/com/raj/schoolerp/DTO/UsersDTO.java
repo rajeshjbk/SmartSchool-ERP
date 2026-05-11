@@ -2,6 +2,8 @@ package com.raj.schoolerp.DTO;
 
 import com.raj.schoolerp.entity.UserRole;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +21,8 @@ public class UsersDTO {
 	private String password;
 
 	@NotNull(message = "User Role is Mandatory")
-	private String role; // ADMIN, TEACHER, STUDENT, PARENT
+	@Enumerated(EnumType.STRING)
+	private UserRole role; 
 
 	@NotNull(message = "User Fullname is Mandatory")
 	private String fullName;

@@ -1,7 +1,11 @@
 package com.raj.schoolerp.DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import com.raj.schoolerp.entity.ExamStatus;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,14 +25,15 @@ public class ExamsDTO {
 	private String academicYear;
 	
 	@NonNull
-	private Date startDate;
+	private LocalDate startDate;
 	
 	@NonNull
-	private Date endDate;
+	private LocalDate endDate;
 	
-	private Date resultDate;
+	private LocalDate resultDate;
 	
 	@NonNull
-	private String examStatus;
+	@Enumerated(EnumType.STRING)
+	private ExamStatus examStatus;
 	
 }

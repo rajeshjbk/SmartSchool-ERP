@@ -23,16 +23,11 @@ public class NoticesDTO {
 	
 	@NonNull
 	private String audience;
-	
-	@NonNull
-	private LocalDate publishDate;
-	
+		
 	@NonNull
 	private LocalDate expiryDate;
 	
 	private String attachment;
 	
 	private Boolean isUrgent;
-	
-	private LocalDateTime createdAt;
 }

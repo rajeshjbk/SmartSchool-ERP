@@ -40,9 +40,4 @@ public class BooksDTO {
 	@NonNull
 	private String shelfLocation;
 	
-	@NonNull
-	private LocalDate addedDate;
-	
-
-	
 }

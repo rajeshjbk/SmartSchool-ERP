@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +27,14 @@ public class UsersServiceImpl implements UsersService {
 	public Users addUser(UsersDTO usersDTO) throws UsersException {
 		
 		Users newUser = new Users();
-		newUser.setEmail(usersDTO.getEmail());
+		/*newUser.setEmail(usersDTO.getEmail());
 		newUser.setUserName(usersDTO.getUserName());
 		newUser.setPassword(usersDTO.getPassword());
 		newUser.setFullName(usersDTO.getFullName());
 		newUser.setPhone(usersDTO.getPhone());
-		newUser.setRole(UserRole.valueOf(usersDTO.getRole()));
+		newUser.setRole(usersDTO.getRole());*/
+		
+		BeanUtils.copyProperties(usersDTO, newUser);
 		
 		//verify the given customer already exists or not
 		Optional<Users> userObj = usersRepo.findByEmail(usersDTO.getEmail());
@@ -46,11 +49,14 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Users addUserAdmin(AdminDTO adminDTO) throws UsersException {
 		Users newAdmin = new Users();
-		newAdmin.setEmail(adminDTO.getEmail());
+		/*newAdmin.setEmail(adminDTO.getEmail());
 		newAdmin.setUserName(adminDTO.getUserName());
 		newAdmin.setPassword(adminDTO.getPassword());
 		newAdmin.setFullName(adminDTO.getFullName());
-		newAdmin.setPhone(adminDTO.getPhone());
+		newAdmin.setPhone(adminDTO.getPhone());*/
+		
+		BeanUtils.copyProperties(adminDTO, newAdmin);
+		
 		newAdmin.setRole(UserRole.ROLE_ADMIN);
 		
 		//verify the given customer already exists or not

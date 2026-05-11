@@ -2,6 +2,10 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
+import com.raj.schoolerp.entity.TeacherStatus;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -22,15 +26,13 @@ public class TeachersDTO {
 	private String designation;
 
 	@NonNull
-	private LocalDate joiningDate;
-
-	@NonNull
 	private Double salary;
 
 	@NonNull
 	private String qualification;
 
 	@NonNull
-	private String teacherStatus;
+	@Enumerated(EnumType.STRING)
+	private TeacherStatus teacherStatus;
 
 }

@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class ResultsDTO {
 
@@ -27,5 +26,6 @@ public class ResultsDTO {
 	@NonNull
 	private Boolean isAbsent;
 	
+	@NonNull
 	private String remarks;
 }

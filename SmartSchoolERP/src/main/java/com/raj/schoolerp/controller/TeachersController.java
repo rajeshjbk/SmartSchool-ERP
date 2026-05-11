@@ -5,8 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.raj.schoolerp.DTO.TeachersDTO;
 import com.raj.schoolerp.entity.TeacherStatus;
 import com.raj.schoolerp.entity.Teachers;
 import com.raj.schoolerp.exception.TeachersException;
@@ -21,13 +31,13 @@ public class TeachersController {
 	private TeachersService teacherService;
 
 	@PostMapping("/add")
-	public ResponseEntity<Teachers> addTeacher(@RequestBody Teachers teacher) throws TeachersException {
+	public ResponseEntity<Teachers> addTeacher(@RequestBody TeachersDTO teacher) throws TeachersException {
 
 		return new ResponseEntity<>(teacherService.addTeacher(teacher), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update/{teacherId}")
-	public ResponseEntity<Teachers> updateTeacher(@PathVariable Long teacherId, @RequestBody Teachers teacher)
+	public ResponseEntity<Teachers> updateTeacher(@PathVariable Long teacherId, @RequestBody TeachersDTO teacher)
 			throws TeachersException {
 
 		return ResponseEntity.ok(teacherService.updateTeacher(teacherId, teacher));

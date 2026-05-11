@@ -1,5 +1,6 @@
 package com.raj.schoolerp.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "exams")
@@ -50,13 +49,12 @@ public class Exams {
 	
 	@CreatedDate
 	@Column(updatable = false)
-	private Date startDate;
+	private LocalDate startDate;
 	
 	@NonNull
-	private Date endDate;
+	private LocalDate endDate;
 	
-	@NonNull
-	private Date resultDate;
+	private LocalDate resultDate;
 	
 	@NonNull
 	@Enumerated(EnumType.STRING)

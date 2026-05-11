@@ -2,6 +2,10 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
+import com.raj.schoolerp.entity.BookStatus;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class BookIssuesDTO {
 	
 	@NonNull
-	private LocalDate issueDate;
-	
-	@NonNull
 	private LocalDate dueDate;
 	
 	@NonNull
@@ -29,5 +30,6 @@ public class BookIssuesDTO {
 	private Boolean finePaid;
 	
 	@NonNull
-	private String  bookStatus ;
+	@Enumerated(EnumType.STRING)
+	private BookStatus  bookStatus ;
 }

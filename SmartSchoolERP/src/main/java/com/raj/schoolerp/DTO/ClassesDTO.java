@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class ClassesDTO {
 
@@ -19,11 +18,9 @@ public class ClassesDTO {
 	private String section;
 	
 	@NonNull
-	private Long classTeacherId;
-	
-	@NonNull
 	private String academicYear;
 	
+	@NonNull
 	private String roomNo;
 	
 	@NonNull

@@ -3,6 +3,7 @@ package com.raj.schoolerp.serviceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,7 @@ public class StudentsServiceImpl implements StudentService {
 		
 		Students newStudent = new Students();
 		
-		newStudent.setAdmissionNo(studentsDTO.getAdmissionNo());
-		newStudent.setFullName(studentsDTO.getFullName());
-		newStudent.setDob(studentsDTO.getDob());
-		newStudent.setAcademicYear(studentsDTO.getAcademicYear());
-		newStudent.setAdmissionDate(studentsDTO.getAdmissionDate());
-		newStudent.setGender(Gender.valueOf(studentsDTO.getGender()));
-		newStudent.setStudentStatus(StudentStatus.valueOf(studentsDTO.getStudentStatus()));
+		BeanUtils.copyProperties(studentsDTO, newStudent);
 		
 		return studentsRepo.save(newStudent);
 	}
@@ -61,13 +56,7 @@ public class StudentsServiceImpl implements StudentService {
 		
 		Students existStudent = studentsRepo.findById(studentId).orElseThrow(()-> new StudentsException("Student Not Found"));
 		
-		existStudent.setAdmissionNo(studentsDTO.getAdmissionNo());
-		existStudent.setFullName(studentsDTO.getFullName());
-		existStudent.setDob(studentsDTO.getDob());
-		existStudent.setAcademicYear(studentsDTO.getAcademicYear());
-		existStudent.setAdmissionDate(studentsDTO.getAdmissionDate());
-		existStudent.setGender(Gender.valueOf(studentsDTO.getGender()));
-		existStudent.setStudentStatus(StudentStatus.valueOf(studentsDTO.getStudentStatus()));
+		BeanUtils.copyProperties(studentsDTO, existStudent);
 		
 		return studentsRepo.save(existStudent);
 	}

@@ -39,14 +39,14 @@ public class Attendance {
 	@JoinColumn(name = "studentId")
 	private Students students;
 	
-	@NonNull
+	@CreationTimestamp
+	@Column(updatable = false)
 	private Date date;
 	
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private AttendanceStatus attendanceStatus;
 	
-	@NonNull
 	private String remarks;
 	
 	@CreationTimestamp
