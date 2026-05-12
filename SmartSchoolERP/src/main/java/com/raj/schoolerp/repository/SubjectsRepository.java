@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.raj.schoolerp.entity.SubjectType;
-import com.raj.schoolerp.entity.Subjects;
+import com.raj.schoolerp.model.SubjectType;
+import com.raj.schoolerp.model.Subjects;
 
 @Repository
 public interface SubjectsRepository extends JpaRepository<Subjects, Long> {

@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.raj.schoolerp.entity.ExamStatus;
-import com.raj.schoolerp.entity.Exams;
+import com.raj.schoolerp.model.ExamStatus;
+import com.raj.schoolerp.model.Exams;
 
 @Repository
 public interface ExamsRepository extends JpaRepository<Exams, Long> {

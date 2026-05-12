@@ -2,8 +2,8 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
-import com.raj.schoolerp.entity.FeeTransactionStatus;
-import com.raj.schoolerp.entity.PaymentMode;
+import com.raj.schoolerp.model.FeeTransactionStatus;
+import com.raj.schoolerp.model.PaymentMode;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

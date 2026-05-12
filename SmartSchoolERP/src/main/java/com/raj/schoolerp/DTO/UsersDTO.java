@@ -1,6 +1,6 @@
 package com.raj.schoolerp.DTO;
 
-import com.raj.schoolerp.entity.UserRole;
+import com.raj.schoolerp.model.UserRole;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

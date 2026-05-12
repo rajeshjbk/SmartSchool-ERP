@@ -2,7 +2,7 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
-import com.raj.schoolerp.entity.TeacherStatus;
+import com.raj.schoolerp.model.TeacherStatus;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

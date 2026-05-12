@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.raj.schoolerp.entity.Results;
+import com.raj.schoolerp.model.Results;
 
 @Repository
 public interface ResultsRepository extends JpaRepository<Results, Long> {

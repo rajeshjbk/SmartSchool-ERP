@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.ClassesDTO;
-import com.raj.schoolerp.entity.Classes;
 import com.raj.schoolerp.exception.ClassesException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.repository.ClassesRepository;
 import com.raj.schoolerp.service.ClassesService;
 

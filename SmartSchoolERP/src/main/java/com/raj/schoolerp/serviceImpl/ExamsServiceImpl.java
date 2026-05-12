@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.ExamsDTO;
-import com.raj.schoolerp.entity.ExamStatus;
-import com.raj.schoolerp.entity.Exams;
 import com.raj.schoolerp.exception.ExamsException;
+import com.raj.schoolerp.model.ExamStatus;
+import com.raj.schoolerp.model.Exams;
 import com.raj.schoolerp.repository.ExamsRepository;
 import com.raj.schoolerp.service.ExamsService;
 

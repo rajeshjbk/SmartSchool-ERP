@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.raj.schoolerp.DTO.ExamSubjectsDTO;
-import com.raj.schoolerp.entity.ExamSubjects;
 import com.raj.schoolerp.exception.ExamSubjectsException;
+import com.raj.schoolerp.model.ExamSubjects;
 import com.raj.schoolerp.service.ExamSubjectsService;
 
 @RestController

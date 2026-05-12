@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.raj.schoolerp.DTO.ExamSubjectsDTO;
-import com.raj.schoolerp.entity.ExamSubjects;
 import com.raj.schoolerp.exception.ExamSubjectsException;
+import com.raj.schoolerp.model.ExamSubjects;
 
 public interface ExamSubjectsService {
 

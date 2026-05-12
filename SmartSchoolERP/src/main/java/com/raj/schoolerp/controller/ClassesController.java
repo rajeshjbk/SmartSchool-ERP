@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.raj.schoolerp.DTO.ClassesDTO;
-import com.raj.schoolerp.entity.Classes;
 import com.raj.schoolerp.exception.ClassesException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.service.ClassesService;
 
 @RestController

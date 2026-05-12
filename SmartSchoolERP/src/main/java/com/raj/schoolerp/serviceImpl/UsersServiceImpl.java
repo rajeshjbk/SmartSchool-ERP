@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.AdminDTO;
 import com.raj.schoolerp.DTO.UsersDTO;
-import com.raj.schoolerp.entity.UserRole;
-import com.raj.schoolerp.entity.Users;
 import com.raj.schoolerp.exception.UsersException;
+import com.raj.schoolerp.model.UserRole;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.repository.UsersRepository;
 import com.raj.schoolerp.service.UsersService;
 @Service

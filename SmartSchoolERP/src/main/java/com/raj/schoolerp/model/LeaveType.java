@@ -1,0 +1,17 @@
+package com.raj.schoolerp.model;
+
+public enum LeaveType {
+
+	SICK_LEAVE,
+    CASUAL_LEAVE,
+    EMERGENCY_LEAVE,
+    MEDICAL_LEAVE,
+    HALF_DAY_LEAVE,
+    FAMILY_FUNCTION_LEAVE,
+    BEREAVEMENT_LEAVE,
+    STUDY_LEAVE,
+    MATERNITY_LEAVE,
+    SPORTS_LEAVE,
+    VACATION_LEAVE,
+    SPECIAL_LEAVE
+}

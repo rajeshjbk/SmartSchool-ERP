@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.raj.schoolerp.DTO.AttendanceDTO;
-import com.raj.schoolerp.entity.Attendance;
 import com.raj.schoolerp.exception.AttendanceException;
+import com.raj.schoolerp.model.Attendance;
 import com.raj.schoolerp.service.AttendanceService;
 
 @RestController

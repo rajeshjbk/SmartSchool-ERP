@@ -3,9 +3,9 @@ package com.raj.schoolerp.service;
 import java.util.List;
 
 import com.raj.schoolerp.DTO.TeachersDTO;
-import com.raj.schoolerp.entity.TeacherStatus;
-import com.raj.schoolerp.entity.Teachers;
 import com.raj.schoolerp.exception.TeachersException;
+import com.raj.schoolerp.model.TeacherStatus;
+import com.raj.schoolerp.model.Teachers;
 
 public interface TeachersService  {
 

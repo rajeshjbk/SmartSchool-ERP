@@ -1,6 +1,6 @@
 package com.raj.schoolerp.DTO;
 
-import com.raj.schoolerp.entity.AttendanceStatus;
+import com.raj.schoolerp.model.AttendanceStatus;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

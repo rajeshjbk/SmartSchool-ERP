@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.raj.schoolerp.DTO.AdminDTO;
 import com.raj.schoolerp.DTO.UsersDTO;
-import com.raj.schoolerp.entity.Users;
 import com.raj.schoolerp.exception.UsersException;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.service.UsersService;
 
 @RestController

@@ -3,8 +3,8 @@ package com.raj.schoolerp.service;
 import java.util.List;
 
 import com.raj.schoolerp.DTO.SubjectsDTO;
-import com.raj.schoolerp.entity.Subjects;
 import com.raj.schoolerp.exception.SubjectsException;
+import com.raj.schoolerp.model.Subjects;
 
 public interface SubjectsService {
 

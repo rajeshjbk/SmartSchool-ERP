@@ -3,8 +3,8 @@ package com.raj.schoolerp.service;
 import java.util.List;
 
 import com.raj.schoolerp.DTO.ClassesDTO;
-import com.raj.schoolerp.entity.Classes;
 import com.raj.schoolerp.exception.ClassesException;
+import com.raj.schoolerp.model.Classes;
 
 public interface ClassesService {
 

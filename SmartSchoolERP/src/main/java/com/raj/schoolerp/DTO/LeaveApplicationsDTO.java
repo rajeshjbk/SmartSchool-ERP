@@ -3,7 +3,7 @@ package com.raj.schoolerp.DTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.raj.schoolerp.entity.LeaveStatus;
+import com.raj.schoolerp.model.LeaveStatus;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

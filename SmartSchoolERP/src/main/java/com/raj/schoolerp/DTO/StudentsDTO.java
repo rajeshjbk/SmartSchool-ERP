@@ -2,7 +2,7 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
-import com.raj.schoolerp.entity.StudentStatus;
+import com.raj.schoolerp.model.StudentStatus;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

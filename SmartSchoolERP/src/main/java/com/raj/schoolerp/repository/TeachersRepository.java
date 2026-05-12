@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.raj.schoolerp.entity.TeacherStatus;
-import com.raj.schoolerp.entity.Teachers;
+import com.raj.schoolerp.model.TeacherStatus;
+import com.raj.schoolerp.model.Teachers;
 
 @Repository
 public interface TeachersRepository extends JpaRepository<Teachers, Long> {

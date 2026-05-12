@@ -1,11 +1,23 @@
 package com.raj.schoolerp.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.raj.schoolerp.entity.FeeTransactions;
+import com.raj.schoolerp.model.FeeTransactionStatus;
+import com.raj.schoolerp.model.FeeTransactions;
 
 @Repository
 public interface FeeTransactionsRepository extends JpaRepository<FeeTransactions, Long> {
 
+	// Get Fee Transactions By Student Id
+	@Query("SELECT ft FROM FeeTransactions ft " + "WHERE ft.student.studentId = :studentId")
+	List<FeeTransactions> findFeeTransactionsByStudentId(@Param("studentId") Long studentId);
+
+	// Get Fee Transactions By Status
+	@Query("SELECT ft FROM FeeTransactions ft " + "WHERE ft.feeTransactionStatus = :status")
+	List<FeeTransactions> findFeeTransactionsByStatus(@Param("status") FeeTransactionStatus status);
 }
