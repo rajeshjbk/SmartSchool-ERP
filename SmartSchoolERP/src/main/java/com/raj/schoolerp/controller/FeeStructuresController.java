@@ -12,7 +12,7 @@ import com.raj.schoolerp.model.Frequency;
 import com.raj.schoolerp.service.FeeStructuresService;
 
 @RestController
-@RequestMapping("/fee-structures")
+@RequestMapping("/schoolerp/fee-structures")
 @CrossOrigin("*")
 public class FeeStructuresController {
 

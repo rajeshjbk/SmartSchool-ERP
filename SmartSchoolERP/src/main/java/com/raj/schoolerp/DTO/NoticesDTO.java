@@ -1,33 +1,31 @@
 package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import com.raj.schoolerp.model.Audience;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class NoticesDTO {
-	
-	@NonNull
+
 	private String title;
-	
-	@NonNull
+
 	private String content;
-	
-	@NonNull
-	private String audience;
-		
-	@NonNull
+
+	private Audience audience;
+
+	private Long classId;
+
+	private Long createdBy;
+
 	private LocalDate expiryDate;
-	
+
 	private String attachment;
-	
+
 	private Boolean isUrgent;
 }

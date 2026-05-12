@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -37,6 +40,7 @@ public class Teachers {
 	private Long teacherId;
 
 	@NonNull
+	@Column(unique = true)
 	private String employeeId;
 
 	@NonNull
@@ -47,7 +51,7 @@ public class Teachers {
 	@Column(length = 30)
 	private String designation;
 
-	@CreatedDate
+	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDate joiningDate;
 
@@ -63,15 +67,18 @@ public class Teachers {
 
 	@ManyToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnoreProperties({ "password", "teachers" })
 	private Users user;
 
 	@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Subjects> subjects;
 
 	@OneToMany(mappedBy = "teacher")
+	@JsonIgnore
 	private List<Classes> classes;
-	
-	@OneToMany(mappedBy = "teachers")
-	private List<Timetable> timetables;
 
+	@OneToMany(mappedBy = "teachers")
+	@JsonIgnore
+	private List<Timetable> timetables;
 }

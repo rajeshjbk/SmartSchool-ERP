@@ -2,30 +2,36 @@ package com.raj.schoolerp.service;
 
 import java.util.List;
 
-import com.raj.schoolerp.DTO.AdminDTO;
 import com.raj.schoolerp.DTO.UsersDTO;
 import com.raj.schoolerp.exception.UsersException;
+import com.raj.schoolerp.model.UserRole;
 import com.raj.schoolerp.model.Users;
 
 public interface UsersService {
 
-	//Adding Customer
-	//insert into user ... values...(....)
-	public Users addUser(UsersDTO usersDTO) throws UsersException;
+	// Add User
+	Users addUser(UsersDTO usersDTO) throws UsersException;
 
-	//Adding UserAdmin
-	public Users addUserAdmin(AdminDTO adminDTO) throws UsersException;
+	// Update User
+	Users updateUser(Long userId, UsersDTO usersDTO) throws UsersException;
 
-	//select * from user where email=....
-	public Users getUserByEmailId(String emailId) throws UsersException;
+	// Get User By Id
+	Users getUserById(Long userId) throws UsersException;
 
-	public Users getUserDetails(Long userId) throws UsersException;
+	// Get All Users
+	List<Users> getAllUsers() throws UsersException;
 
-	//update user set pass=new....
-	public Users changePassword(Long userId, UsersDTO usersDTO) throws UsersException;
+	// Get User By Username
+	Users getUserByUserName(String userName) throws UsersException;
 
-	//select * from user
-	public List<Users> getAllUserDetails() throws UsersException;
+	// Get Users By Role
+	List<Users> getUsersByRole(UserRole role) throws UsersException;
+
+	// Delete User By Id
+	String deleteUserById(Long userId) throws UsersException;
+
+	// Bulk Delete Users
+	String deleteUsers(List<Long> userIds) throws UsersException;
 
 	public String deactivate(Long userId) throws UsersException;
 }

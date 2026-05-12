@@ -1,32 +1,32 @@
 package com.raj.schoolerp.DTO;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import com.raj.schoolerp.model.DayOfWeek;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class TimetableDTO {
 
-	
-	@NonNull
-	private String dayOfWeek;
-	
-	@NonNull
+	private List<Long> classIds;
+
+	private Long subjectId;
+
+	private Long teacherId;
+
+	private DayOfWeek dayOfWeek;
+
 	private Integer periodOfTime;
-	
-	@NonNull
+
 	private LocalTime startTime;
-	
-	@NonNull
+
 	private LocalTime endTime;
-	
-	@NonNull
+
 	private String roomNo;
-	
-	
 }

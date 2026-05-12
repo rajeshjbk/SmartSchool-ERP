@@ -1,28 +1,27 @@
 package com.raj.schoolerp.DTO;
 
+import com.raj.schoolerp.model.SubjectType;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class SubjectsDTO {
 
-	@NonNull
-	private String subjectName;
-	
-	@NonNull
-	private String SubjectCode;
-	
-	@NonNull
-	private String  subjectType ;
-	
-	@NonNull
-	private Integer creditHrs;
-	
-	@NonNull
-	private Boolean isElective;
-		
+    private String subjectName;
+
+    private String subjectCode;
+
+    private SubjectType subjectType;
+
+    private Integer creditHrs;
+
+    private Boolean isElective;
+
+    private Long classId;
+
+    private Long teacherId;
 }

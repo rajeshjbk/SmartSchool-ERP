@@ -2,34 +2,33 @@ package com.raj.schoolerp.DTO;
 
 import java.time.LocalDate;
 
+import com.raj.schoolerp.model.Gender;
 import com.raj.schoolerp.model.StudentStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class StudentsDTO {
 
-	@NonNull
-	private String admissionNo;
-	
-	@NonNull
-	private String fullName;
-	
-	@NonNull
-	private LocalDate dob;
-	
-	@NonNull
-	private String gender;
-	
-	@NonNull
-	private String academicYear;
-	
-	@NonNull
-	private StudentStatus studentStatus;
-  
+    private Long userId;
+
+    private Long parentId;
+
+    private String admissionNo;
+
+    private String fullName;
+
+    private LocalDate dob;
+
+    private Gender gender;
+
+    private Long classId;
+
+    private String academicYear;
+
+    private StudentStatus studentStatus;
 }

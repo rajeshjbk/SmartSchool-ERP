@@ -15,7 +15,7 @@ import com.raj.schoolerp.model.Subjects;
 public interface SubjectsRepository extends JpaRepository<Subjects, Long> {
 
 	// Get Subject By Subject Code
-	@Query("SELECT s FROM Subjects s WHERE s.SubjectCode = :subjectCode")
+	@Query("SELECT s FROM Subjects s WHERE s.subjectCode = :subjectCode")
 	Optional<Subjects> findBySubjectCode(@Param("subjectCode") String subjectCode);
 
 	// Get Subjects By Class Id

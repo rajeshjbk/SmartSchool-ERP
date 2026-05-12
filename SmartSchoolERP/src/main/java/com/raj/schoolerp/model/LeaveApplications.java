@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,41 +35,43 @@ public class LeaveApplications {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long leaveId;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private LeaveType leaveType;
-	
+
 	@NonNull
 	private LocalDate fromDate;
-	
+
 	@NonNull
 	private LocalDate toDate;
-	
+
 	@NonNull
 	private Integer totalDays;
-	
+
 	@NonNull
 	private String reason;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
-	private LeaveStatus  leaveStatus ;
-	
+	private LeaveStatus leaveStatus;
+
 	@ManyToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnoreProperties({ "password", "appliedApplications", "approvedApplications" })
 	private Users user;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "approvedBy")
+	@JsonIgnoreProperties({ "password", "appliedApplications", "approvedApplications" })
 	private Users approvedBy;
-	
+
 	private String rejectionNote;
-	
+
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDateTime appliedOn;
-	
+
 	@UpdateTimestamp
 	@Column(insertable = false)
 	private LocalDateTime approvedOn;

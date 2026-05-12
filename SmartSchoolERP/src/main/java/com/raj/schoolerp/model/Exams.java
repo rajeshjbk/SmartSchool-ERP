@@ -1,10 +1,12 @@
 package com.raj.schoolerp.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,35 +34,44 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 public class Exams {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long examId;
-	
-	@Column(length = 30)
-	private String examName;
-	
-	@ManyToOne
-	@JoinColumn(name = "classId")
-	private Classes classes;
-	
-	@NonNull
-	@Column(length = 30)
-	private String academicYear;
-	
-	@CreatedDate
-	@Column(updatable = false)
-	private LocalDate startDate;
-	
-	@NonNull
-	private LocalDate endDate;
-	
-	private LocalDate resultDate;
-	
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	private ExamStatus examStatus;
-	
-	@OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-	private List<ExamSubjects> examSubjects;
+    @Id
+    @GeneratedValue(strategy =
+            GenerationType.IDENTITY)
+    private Long examId;
 
+    @Column(length = 30)
+    private String examName;
+
+    @ManyToOne
+    @JoinColumn(name = "classId")
+    @JsonIgnoreProperties({
+            "students",
+            "subjects",
+            "attendance",
+            "exams"
+    })
+    private Classes classes;
+
+    @NonNull
+    @Column(length = 30)
+    private String academicYear;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate startDate;
+
+    @NonNull
+    private LocalDate endDate;
+
+    private LocalDate resultDate;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    private ExamStatus examStatus;
+
+    @OneToMany(mappedBy = "exam",
+            cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ExamSubjects>
+            examSubjects;
 }

@@ -29,7 +29,6 @@ public class ClassesController {
 	@Autowired
 	private ClassesService classesService;
 
-	// Add Class
 	@PostMapping("/add")
 	public ResponseEntity<Classes> addClass(@RequestBody ClassesDTO classes) throws ClassesException {
 
@@ -38,7 +37,7 @@ public class ClassesController {
 		return new ResponseEntity<>(savedClass, HttpStatus.CREATED);
 	}
 
-	// Update Class
+	
 	@PutMapping("/update/{classId}")
 	public ResponseEntity<Classes> updateClass(@PathVariable Long classId, @RequestBody ClassesDTO classes)
 			throws ClassesException {
@@ -48,7 +47,7 @@ public class ClassesController {
 		return new ResponseEntity<>(updatedClass, HttpStatus.OK);
 	}
 
-	// Delete Class
+
 	@DeleteMapping("/delete/{classId}")
 	public ResponseEntity<String> deleteClass(@PathVariable Long classId) throws ClassesException {
 
@@ -57,7 +56,7 @@ public class ClassesController {
 		return new ResponseEntity<>("Class deleted successfully", HttpStatus.OK);
 	}
 
-	// Get Class By Id
+	
 	@GetMapping("/{classId}")
 	public ResponseEntity<Classes> getClassById(@PathVariable Long classId) throws ClassesException {
 
@@ -66,7 +65,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get All Classes
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<Classes>> getAllClasses() throws ClassesException {
 
@@ -75,7 +74,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classesList, HttpStatus.OK);
 	}
 
-	// Get Class By Name
+	
 	@GetMapping("/name/{className}")
 	public ResponseEntity<List<Classes>> getClassByName(@PathVariable String className) throws ClassesException {
 
@@ -84,7 +83,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Class By Section
+	
 	@GetMapping("/section/{section}")
 	public ResponseEntity<List<Classes>> getClassBySection(@PathVariable String section) throws ClassesException {
 
@@ -93,7 +92,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Classes By Academic Year
+	
 	@GetMapping("/academic-year/{academicYear}")
 	public ResponseEntity<List<Classes>> getClassesByAcademicYear(@PathVariable String academicYear)
 			throws ClassesException {
@@ -103,7 +102,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Class By Room Number
+	
 	@GetMapping("/room/{roomNo}")
 	public ResponseEntity<Classes> getClassByRoomNo(@PathVariable String roomNo) throws ClassesException {
 
@@ -112,7 +111,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Class By Teacher Id
+	
 	@GetMapping("/teacher/{teacherId}")
 	public ResponseEntity<Classes> getClassByTeacherId(@PathVariable Long teacherId) throws ClassesException {
 
@@ -121,7 +120,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Students By Class
+	
 	@GetMapping("/{classId}/students")
 	public ResponseEntity<Classes> getStudentsByClass(@PathVariable Long classId) throws ClassesException {
 
@@ -130,7 +129,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Get Subjects By Class
+	
 	@GetMapping("/{classId}/subjects")
 	public ResponseEntity<Classes> getSubjectsByClass(@PathVariable Long classId) throws ClassesException {
 
@@ -139,7 +138,7 @@ public class ClassesController {
 		return new ResponseEntity<>(classes, HttpStatus.OK);
 	}
 
-	// Count Total Classes
+	
 	@GetMapping("/count")
 	public ResponseEntity<Long> countClasses() {
 

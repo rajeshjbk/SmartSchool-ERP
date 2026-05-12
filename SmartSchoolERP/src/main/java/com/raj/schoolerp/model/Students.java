@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,56 +38,64 @@ public class Students {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long studentId;
-	
+
 	@OneToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnoreProperties({ "password", "students", "listStudents" })
 	private Users user;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "parentId")
+	@JsonIgnoreProperties({ "password", "students", "listStudents" })
 	private Users users;
-	
+
 	@NonNull
+	@Column(unique = true)
 	private String admissionNo;
-	
+
 	@NonNull
 	private String fullName;
-	
+
 	@NonNull
 	private LocalDate dob;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "classId")
+	@JsonIgnoreProperties({ "students", "subjects", "attendance" })
 	private Classes classes;
-	
+
 	@NonNull
 	private String academicYear;
-	
+
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDate admissionDate;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private StudentStatus studentStatus;
-     
+
 	@OneToMany(mappedBy = "students", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Attendance> attendance;
-	
+
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-	private Set<BookIssues> bookIssues; 
-	
+	@JsonIgnore
+	private Set<BookIssues> bookIssues;
+
 	@OneToMany(mappedBy = "issuedBy", cascade = CascadeType.ALL)
-	private Set<BookIssues> bookIssuedBy; 
-	
+	@JsonIgnore
+	private Set<BookIssues> bookIssuedBy;
+
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<FeeTransactions> feeTransactions;
-	
+
 	@OneToMany(mappedBy = "student")
+	@JsonIgnore
 	private List<Results> results;
-	
 }

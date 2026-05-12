@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,11 +18,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "exam_subjects")
@@ -34,35 +33,36 @@ public class ExamSubjects {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long examSubId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "examId")
+	@JsonIgnoreProperties({ "examSubjects" })
 	private Exams exam;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "subjectId")
+	@JsonIgnoreProperties({ "examSubjects", "classes", "teacher" })
 	private Subjects subjects;
-	
+
 	@NonNull
 	private LocalDate examDate;
-	
+
 	@NonNull
 	private Integer durationMin;
-	
+
 	@NonNull
 	private Integer maxMarks;
-	
+
 	@NonNull
 	private Integer passMarks;
-	
+
 	@NonNull
 	private LocalTime startTime;
-	
+
 	@NonNull
 	private String roomNo;
-	
+
 	@OneToMany(mappedBy = "examSubjects", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Results> results;
-	
-	
 }

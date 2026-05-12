@@ -3,6 +3,8 @@ package com.raj.schoolerp.model;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,39 +34,36 @@ public class Timetable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long timeTableId;
-	
+
 	@ManyToMany
-	@JoinTable(
-	    name = "timetable_classes",
-	    joinColumns = @JoinColumn(name = "timetable_id"),
-	    inverseJoinColumns = @JoinColumn(name = "class_id")
-	)
+	@JoinTable(name = "timetable_classes", joinColumns = @JoinColumn(name = "timetable_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
+	@JsonIgnoreProperties({ "students", "subjects", "attendance", "timetables" })
 	private List<Classes> classes;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "subjectId")
+	@JsonIgnoreProperties({ "examSubjects", "timetables", "classes", "teacher" })
 	private Subjects subject;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "teacherId")
+	@JsonIgnoreProperties({ "subjects", "classes", "timetables", "user" })
 	private Teachers teachers;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private DayOfWeek dayOfWeek;
-	
+
 	@NonNull
 	private Integer periodOfTime;
-	
+
 	@NonNull
 	private LocalTime startTime;
-	
+
 	@NonNull
 	private LocalTime endTime;
-	
+
 	@NonNull
 	@Column(length = 30)
 	private String roomNo;
-	
-	
 }

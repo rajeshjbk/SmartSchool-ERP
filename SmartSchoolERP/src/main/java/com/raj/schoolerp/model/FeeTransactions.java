@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,51 +34,53 @@ public class FeeTransactions {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long feeTransactionsId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "studentId")
+	@JsonIgnoreProperties({ "user", "attendances", "results" })
 	private Students student;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "feeStructId")
+	@JsonIgnoreProperties({ "feeTransactions", "classes" })
 	private FeeStructures feeStructures;
-	
+
 	@NonNull
 	private Double amountDue;
-	
+
 	@NonNull
 	private Double lateFine;
-		
+
 	@NonNull
 	private Double amountPaid;
-	
+
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDate paymentDate;
-	
+
 	@NonNull
 	private LocalDate dueDate;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private PaymentMode paymentMode;
-	
+
 	@NonNull
 	private String transactionId;
-	
+
 	@NonNull
 	private String recieptNo;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private FeeTransactionStatus feeTransactionStatus;
-	
+
 	@NonNull
 	private String academicYear;
-	
+
 	@NonNull
 	private String collectedBy;
-	
+
 	@CreationTimestamp
 	@Column(insertable = false)
 	private LocalDateTime createdAt;

@@ -1,38 +1,27 @@
 package com.raj.schoolerp.DTO;
 
-import java.time.LocalDate;
-
 import com.raj.schoolerp.model.TeacherStatus;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class TeachersDTO {
 
-	@NonNull
-	private String employeeId;
+    private String employeeId;
 
-	@NonNull
-	private String department;
+    private String department;
 
-	@NonNull
-	private String designation;
+    private String designation;
 
-	@NonNull
-	private Double salary;
+    private Double salary;
 
-	@NonNull
-	private String qualification;
+    private String qualification;
 
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	private TeacherStatus teacherStatus;
+    private TeacherStatus teacherStatus;
 
+    private Long userId;
 }
