@@ -19,7 +19,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired
 	private AttendanceRepository attendanceRepo;
 
-	// Mark Attendance
+	
 	@Override
 	public Attendance markAttendance(AttendanceDTO attendanceDTO) throws AttendanceException {
 
@@ -30,7 +30,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return attendanceRepo.save(attendance);
 	}
 
-	// Update Attendance
+	
 	@Override
 	public Attendance updateAttendance(Long attendanceId, AttendanceDTO attendanceDTO) throws AttendanceException {
 
@@ -42,7 +42,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return attendanceRepo.save(existAttendance);
 	}
 
-	// Delete Attendance
+	
 	@Override
 	public String deleteAttendance(Long attendanceId) throws AttendanceException {
 
@@ -53,21 +53,21 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return "Attendance deleted with ID: " + attendanceId;
 	}
 
-	// Get Attendance By Id
+	
 	@Override
 	public Attendance getAttendanceById(Long attendanceId) throws AttendanceException {
 
 		return attendanceRepo.findById(attendanceId).orElseThrow(() -> new AttendanceException("Wrong Attendance Id"));
 	}
 
-	// Get All Attendance
+	
 	@Override
 	public List<Attendance> getAllAttendance() throws AttendanceException {
 
 		return attendanceRepo.findAll();
 	}
 
-	// Get Attendance By Student Id
+	
 	@Override
 	public List<Attendance> getAttendanceByStudentId(Long studentId) throws AttendanceException {
 
@@ -81,7 +81,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return attendance;
 	}
 
-	// Get Attendance By Class Id
+	
 	@Override
 	public List<Attendance> getAttendanceByClassId(Long classId) throws AttendanceException {
 
@@ -95,7 +95,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return attendance;
 	}
 
-	// Get Attendance By Date
+	
 	@Override
 	public List<Attendance> getAttendanceByDate(Date date) throws AttendanceException {
 
@@ -109,7 +109,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return attendance;
 	}
 
-	// Get Student Attendance By Date
+	
 	@Override
 	public Attendance getStudentAttendanceByDate(Long studentId, Date date) throws AttendanceException {
 
@@ -117,7 +117,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 				.orElseThrow(() -> new AttendanceException("Attendance Not Found"));
 	}
 
-	// Get Attendance Between Dates
+	
 	@Override
 	public List<Attendance> getAttendanceBetweenDates(Date startDate, Date endDate) throws AttendanceException {
 

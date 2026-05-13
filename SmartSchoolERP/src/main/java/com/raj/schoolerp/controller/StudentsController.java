@@ -18,14 +18,14 @@ public class StudentsController {
     @Autowired
     private StudentService studentService;
 
-    // Add Student
+   
     @PostMapping("/add")
     public Students addStudent(@RequestBody StudentsDTO studentsDTO) throws StudentsException {
 
         return studentService.addStudent(studentsDTO);
     }
 
-    // Get Student By Admission No
+    
     @GetMapping("/admission/{admissionNo}")
     public Students getStudentByAdmissionNo(
             @PathVariable String admissionNo) throws StudentsException {
@@ -33,7 +33,7 @@ public class StudentsController {
         return studentService.getStudentByAdmissionNo(admissionNo);
     }
 
-    // Get Student By Student ID
+    
     @GetMapping("/{studentId}")
     public Students getStudentByStudentId(
             @PathVariable Long studentId) throws StudentsException {
@@ -41,7 +41,7 @@ public class StudentsController {
         return studentService.getStudentByStudentId(studentId);
     }
 
-    // Update Student By Student ID
+    
     @PutMapping("/update/{studentId}")
     public Students updateStudentByStudentId(
             @PathVariable Long studentId,
@@ -50,7 +50,7 @@ public class StudentsController {
         return studentService.updateStudentByStudentId(studentId, studentsDTO);
     }
 
-    // Delete Student By Student ID
+    
     @DeleteMapping("/delete/{studentId}")
     public String deleteStudentByStudentId(
             @PathVariable Long studentId) throws StudentsException {
@@ -58,7 +58,7 @@ public class StudentsController {
         return studentService.deleteStudentByStudentId(studentId);
     }
 
-    // Get All Students
+   
     @GetMapping("/all")
     public List<Students> getAllStudents() throws StudentsException {
 

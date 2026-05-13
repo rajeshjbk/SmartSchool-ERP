@@ -18,7 +18,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 	@Autowired
 	private SubjectsRepository subjectsRepo;
 
-	// Add Subject
+	
 	@Override
 	public Subjects addSubject(SubjectsDTO subjectDTO) throws SubjectsException {
 
@@ -29,7 +29,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjectsRepo.save(newSubject);
 	}
 
-	// Update Subject
+	
 	@Override
 	public Subjects updateSubject(Long subjectId, SubjectsDTO subjectDTO) throws SubjectsException {
 
@@ -41,7 +41,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjectsRepo.save(existSubject);
 	}
 
-	// Delete Subject
+	
 	@Override
 	public String deleteSubject(Long subjectId) throws SubjectsException {
 
@@ -52,21 +52,21 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return "Subject is deleted with Subject ID: " + subjectId;
 	}
 
-	// Get Subject By Id
+	
 	@Override
 	public Subjects getSubjectById(Long subjectId) throws SubjectsException {
 
 		return subjectsRepo.findById(subjectId).orElseThrow(() -> new SubjectsException("Wrong Subject Id"));
 	}
 
-	// Get All Subjects
+	
 	@Override
 	public List<Subjects> getAllSubjects() throws SubjectsException {
 
 		return subjectsRepo.findAll();
 	}
 
-	// Get Subject By Subject Code
+	
 	@Override
 	public Subjects getSubjectByCode(String subjectCode) throws SubjectsException {
 
@@ -74,7 +74,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 				.orElseThrow(() -> new SubjectsException("Wrong Subject Code"));
 	}
 
-	// Get Subjects By Class Id
+	
 	@Override
 	public List<Subjects> getSubjectsByClassId(Long classId) throws SubjectsException {
 
@@ -88,7 +88,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	// Get Subjects By Teacher Id
+	
 	@Override
 	public List<Subjects> getSubjectsByTeacherId(Long teacherId) throws SubjectsException {
 
@@ -102,7 +102,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	// Get Elective Subjects
+	
 	@Override
 	public List<Subjects> getElectiveSubjects() throws SubjectsException {
 
@@ -116,7 +116,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	// Get Core Subjects
+	
 	@Override
 	public List<Subjects> getCoreSubjects() throws SubjectsException {
 

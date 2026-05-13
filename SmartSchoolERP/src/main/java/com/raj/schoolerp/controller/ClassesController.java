@@ -147,7 +147,7 @@ public class ClassesController {
 		return new ResponseEntity<>(totalClasses, HttpStatus.OK);
 	}
 
-	// Check Class Exists
+	
 	@GetMapping("/exists")
 	public ResponseEntity<Boolean> existsByClassNameAndSection(@RequestParam String className,
 			@RequestParam String section) {

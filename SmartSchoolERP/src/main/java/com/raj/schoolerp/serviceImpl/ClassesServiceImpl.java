@@ -18,7 +18,7 @@ public class ClassesServiceImpl implements ClassesService {
 	@Autowired
 	private ClassesRepository classesRepository;
 
-	// Add Class
+	
 	@Override
 	public Classes addClass(ClassesDTO classesDTO) throws ClassesException {
 
@@ -35,7 +35,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classesRepository.save(newClass);
 	}
 
-	// Update Class
+	
 	@Override
 	public Classes updateClass(Long classId, ClassesDTO updatedClassesDTO) throws ClassesException {
 
@@ -47,7 +47,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classesRepository.save(existingClass);
 	}
 
-	// Delete Class
+	
 	@Override
 	public void deleteClass(Long classId) throws ClassesException {
 
@@ -57,7 +57,7 @@ public class ClassesServiceImpl implements ClassesService {
 		classesRepository.delete(existingClass);
 	}
 
-	// Get Class By Id
+	
 	@Override
 	public Classes getClassById(Long classId) throws ClassesException {
 
@@ -65,7 +65,7 @@ public class ClassesServiceImpl implements ClassesService {
 				.orElseThrow(() -> new ClassesException("Class not found with id: " + classId));
 	}
 
-	// Get All Classes
+	
 	@Override
 	public List<Classes> getAllClasses() throws ClassesException {
 
@@ -78,7 +78,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classes;
 	}
 
-	// Get Class By Name
+	
 	@Override
 	public List<Classes> getClassByName(String className) throws ClassesException {
 
@@ -91,7 +91,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classes;
 	}
 
-	// Get Class By Section
+	
 	@Override
 	public List<Classes> getClassBySection(String section) throws ClassesException {
 
@@ -104,7 +104,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classes;
 	}
 
-	// Get Classes By Academic Year
+	
 	@Override
 	public List<Classes> getClassesByAcademicYear(String academicYear) throws ClassesException {
 
@@ -117,7 +117,7 @@ public class ClassesServiceImpl implements ClassesService {
 		return classes;
 	}
 
-	// Get Class By Room Number
+	
 	@Override
 	public Classes getClassByRoomNo(String roomNo) throws ClassesException {
 
@@ -125,7 +125,7 @@ public class ClassesServiceImpl implements ClassesService {
 				.orElseThrow(() -> new ClassesException("Class not found with room no: " + roomNo));
 	}
 
-	// Get Class By Teacher Id
+	
 	@Override
 	public Classes getClassByTeacherId(Long teacherId) throws ClassesException {
 
@@ -133,28 +133,28 @@ public class ClassesServiceImpl implements ClassesService {
 				.orElseThrow(() -> new ClassesException("Class not found for teacher id: " + teacherId));
 	}
 
-	// Get Students By Class
+	
 	@Override
 	public Classes getStudentsByClass(Long classId) throws ClassesException {
 
 		return getClassById(classId);
 	}
 
-	// Get Subjects By Class
+	
 	@Override
 	public Classes getSubjectsByClass(Long classId) throws ClassesException {
 
 		return getClassById(classId);
 	}
 
-	// Count Total Classes
+	
 	@Override
 	public Long countClasses() {
 
 		return classesRepository.count();
 	}
 
-	// Check Class Exists
+	
 	@Override
 	public boolean existsByClassNameAndSection(String className, String section) {
 
