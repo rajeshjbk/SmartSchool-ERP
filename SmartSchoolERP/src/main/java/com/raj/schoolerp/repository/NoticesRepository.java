@@ -20,4 +20,31 @@ public interface NoticesRepository extends JpaRepository<Notices, Long> {
 	// Get Active Notices
 	@Query("SELECT n FROM Notices n " + "WHERE n.expiryDate >= CURRENT_DATE")
 	List<Notices> findActiveNotices();
+
+	// Student Notices
+	@Query("""
+			SELECT n
+			FROM Notices n
+			WHERE n.audience = 'STUDENTS'
+			OR n.audience = 'ALL'
+			""")
+	List<Notices> getStudentNotices();
+
+	// Teacher Notices
+	@Query("""
+			SELECT n
+			FROM Notices n
+			WHERE n.audience = 'TEACHERS'
+			OR n.audience = 'ALL'
+			""")
+	List<Notices> getTeacherNotices();
+
+	// Parent Notices
+	@Query("""
+			SELECT n
+			FROM Notices n
+			WHERE n.audience = 'PARENTS'
+			OR n.audience = 'ALL'
+			""")
+	List<Notices> getParentNotices();
 }

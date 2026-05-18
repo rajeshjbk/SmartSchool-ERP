@@ -13,7 +13,7 @@ import com.raj.schoolerp.service.LeaveApplicationsService;
 
 @RestController
 @RequestMapping("/schoolerp/leave-applications")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class LeaveApplicationsController {
 
 	@Autowired

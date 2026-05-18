@@ -34,4 +34,36 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 	// Get Attendance Between Dates
 	@Query("SELECT a FROM Attendance a " + "WHERE a.date BETWEEN :startDate AND :endDate")
 	List<Attendance> findAttendanceBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+	// Student Dashboard
+	@Query("""
+			SELECT a
+			FROM Attendance a
+			WHERE a.students.user.userId = :userId
+			""")
+	List<Attendance> getStudentAttendance(@Param("userId") Long userId);
+
+	// Parent Dashboard
+	@Query("""
+			SELECT a
+			FROM Attendance a
+			WHERE a.students.parent.userId = :parentId
+			""")
+	List<Attendance> getAttendanceByParent(@Param("parentId") Long parentId);
+
+	// Teacher Dashboard
+	@Query("""
+			SELECT a
+			FROM Attendance a
+			WHERE a.user.userId = :userId
+			""")
+	List<Attendance> getAttendanceByTeacher(@Param("userId") Long teacherId);
+
+	// Class-wise Attendance
+	@Query("""
+			SELECT a
+			FROM Attendance a
+			WHERE a.classes.classId = :classId
+			""")
+	List<Attendance> getAttendanceByClass(@Param("classId") Long classId);
 }

@@ -20,4 +20,33 @@ public interface LeaveApplicationsRepository extends JpaRepository<LeaveApplicat
 	// Get Leave Applications By Status
 	@Query("SELECT la FROM LeaveApplications la " + "WHERE la.leaveStatus = :leaveStatus")
 	List<LeaveApplications> findLeaveApplicationsByStatus(@Param("leaveStatus") LeaveStatus leaveStatus);
+
+	// Student Leave
+	@Query("""
+			SELECT l
+			FROM LeaveApplications l
+			WHERE l.user.userId = :userId
+			""")
+	List<LeaveApplications> getUserLeaves(@Param("userId") Long userId);
+
+	// Teacher Leave
+	@Query("""
+			SELECT l
+			FROM LeaveApplications l
+			WHERE l.user.role = 'TEACHER'
+			""")
+	List<LeaveApplications> getTeacherLeaves();
+
+	// Parent Leave
+	@Query("""
+			SELECT l
+			FROM LeaveApplications l
+			WHERE l.user.userId =
+			(
+			    SELECT s.user.userId
+			    FROM Students s
+			    WHERE s.parent.userId = :parentId
+			)
+			""")
+	List<LeaveApplications> getParentLeaves(@Param("parentId") Long parentId);
 }

@@ -73,7 +73,7 @@ public class Books {
     @Column(updatable = false)
     private LocalDate addedDate;
 
-    @OneToMany(mappedBy = "books",
+    @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<BookIssues> bookIssues;

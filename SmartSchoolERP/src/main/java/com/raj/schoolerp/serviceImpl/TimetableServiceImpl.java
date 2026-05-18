@@ -8,8 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.TimetableDTO;
 import com.raj.schoolerp.exception.TimetableException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.DayOfWeek;
+import com.raj.schoolerp.model.Subjects;
+import com.raj.schoolerp.model.Teachers;
 import com.raj.schoolerp.model.Timetable;
+import com.raj.schoolerp.repository.ClassesRepository;
+import com.raj.schoolerp.repository.SubjectsRepository;
+import com.raj.schoolerp.repository.TeachersRepository;
 import com.raj.schoolerp.repository.TimetableRepository;
 import com.raj.schoolerp.service.TimetableService;
 
@@ -19,12 +25,44 @@ public class TimetableServiceImpl implements TimetableService {
 	@Autowired
 	private TimetableRepository timetableRepo;
 
+	@Autowired
+	private SubjectsRepository subjectsRepository;
+	
+	@Autowired
+	private ClassesRepository classesRepository;
+	
+	@Autowired
+	private TeachersRepository teachersRepository;
+	
 	@Override
 	public Timetable addTimetable(TimetableDTO timetableDTO) throws TimetableException {
 
 		Timetable newTimetable = new Timetable();
 
 		BeanUtils.copyProperties(timetableDTO, newTimetable);
+
+		// Fetch Class
+		List<Classes> classes = classesRepository.findAllById(timetableDTO.getClassIds());
+
+		if(classes.isEmpty()) {
+			
+			throw new TimetableException("Classes Not Found");
+		}
+		
+		// Fetch Teacher
+				Teachers teacher = teachersRepository.findById(timetableDTO.getTeacherId())
+						.orElseThrow(() -> new TimetableException("Teacher Not Found"));
+				
+		// Fetch Subject
+		Subjects subject = subjectsRepository.findById(timetableDTO.getSubjectId())
+				.orElseThrow(() -> new TimetableException("Subject Not Found"));
+
+		// Set Relations
+		newTimetable.setClasses(classes);
+
+		newTimetable.setSubject(subject);
+
+		newTimetable.setTeachers(teacher);
 
 		return timetableRepo.save(newTimetable);
 	}
@@ -36,6 +74,29 @@ public class TimetableServiceImpl implements TimetableService {
 				.orElseThrow(() -> new TimetableException("Timetable Not Found"));
 
 		BeanUtils.copyProperties(timetableDTO, existTimetable);
+
+		// Fetch Class
+		List<Classes> classes = classesRepository.findAllById(timetableDTO.getClassIds());
+
+		if(classes.isEmpty()) {
+			
+			throw new TimetableException("Class Not Found");
+		}
+		
+		// Fetch Subject
+		Subjects subject = subjectsRepository.findById(timetableDTO.getSubjectId())
+				.orElseThrow(() -> new TimetableException("Subject Not Found"));
+
+		// Fetch Teacher
+		Teachers teacher = teachersRepository.findById(timetableDTO.getTeacherId())
+				.orElseThrow(() -> new TimetableException("Teacher Not Found"));
+
+		// Set Relations
+		existTimetable.setClasses(classes);
+
+		existTimetable.setSubject(subject);
+
+		existTimetable.setTeachers(teacher);
 
 		return timetableRepo.save(existTimetable);
 	}

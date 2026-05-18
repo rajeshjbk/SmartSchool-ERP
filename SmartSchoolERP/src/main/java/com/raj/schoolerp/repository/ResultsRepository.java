@@ -27,4 +27,36 @@ public interface ResultsRepository extends JpaRepository<Results, Long> {
 	// Get Class Rank List
 	@Query("SELECT r FROM Results r " + "ORDER BY r.rankInClass ASC")
 	List<Results> findRankList();
+
+	// Student Dashboard
+	@Query("""
+			SELECT r
+			FROM Results r
+			WHERE r.student.user.userId = :userId
+			""")
+	List<Results> getStudentResults(@Param("userId") Long userId);
+
+	// Parent Dashboard
+	@Query("""
+			SELECT r
+			FROM Results r
+			WHERE r.student.parent.userId = :parentId
+			""")
+	List<Results> getParentResults(@Param("parentId") Long parentId);
+
+	// Teacher Dashboard
+	@Query("""
+			SELECT r
+			FROM Results r
+			WHERE r.examSubjects.subjects.teacher.teacherId = :teacherId
+			""")
+	List<Results> getTeacherResults(@Param("teacherId") Long teacherId);
+
+	// Result by Exam
+	@Query("""
+			SELECT r
+			FROM Results r
+			WHERE r.examSubjects.exam.examId = :examId
+			""")
+	List<Results> getResultsByExam(@Param("examId") Long examId);
 }

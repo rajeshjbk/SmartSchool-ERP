@@ -74,6 +74,10 @@ public class Teachers {
 	@JsonIgnore
 	private Set<Subjects> subjects;
 
+	@OneToMany(mappedBy = "issuedBy", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<BookIssues> issuedBooks;
+	
 	@OneToMany(mappedBy = "teacher")
 	@JsonIgnore
 	private List<Classes> classes;

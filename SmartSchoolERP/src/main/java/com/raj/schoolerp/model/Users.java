@@ -45,7 +45,6 @@ public class Users {
 	private String userName;
 
 	@NonNull
-	@Column(length = 20)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 
@@ -71,7 +70,7 @@ public class Users {
 	@JsonIgnore
 	private Students students;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Students> listStudents;
 
@@ -92,7 +91,6 @@ public class Users {
 	private List<LeaveApplications> approvedApplications;
 
 	@OneToMany(mappedBy = "user")
-	@JsonIgnore
 	private List<Teachers> teachers;
 
 	@UpdateTimestamp

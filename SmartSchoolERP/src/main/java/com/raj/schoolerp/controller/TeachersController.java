@@ -24,7 +24,7 @@ import com.raj.schoolerp.service.TeachersService;
 
 @RestController
 @RequestMapping("/schoolerp/teachers")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TeachersController {
 
 	@Autowired

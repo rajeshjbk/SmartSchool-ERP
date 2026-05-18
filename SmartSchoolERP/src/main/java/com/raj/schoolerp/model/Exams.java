@@ -3,8 +3,6 @@ package com.raj.schoolerp.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -56,8 +54,7 @@ public class Exams {
     @Column(length = 30)
     private String academicYear;
 
-    @CreationTimestamp
-    @Column(updatable = false)
+    @NonNull
     private LocalDate startDate;
 
     @NonNull

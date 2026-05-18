@@ -19,7 +19,7 @@ public interface BookIssuesRepository extends JpaRepository<BookIssues, Long> {
 	List<BookIssues> findBookIssuesByStudentId(@Param("studentId") Long studentId);
 
 	// Get Book Issues By Book Id
-	@Query("SELECT bi FROM BookIssues bi " + "WHERE bi.books.bookId = :bookId")
+	@Query("SELECT bi FROM BookIssues bi " + "WHERE bi.book.bookId = :bookId")
 	List<BookIssues> findBookIssuesByBookId(@Param("bookId") Long bookId);
 
 	// Get Overdue Books
@@ -33,4 +33,20 @@ public interface BookIssuesRepository extends JpaRepository<BookIssues, Long> {
 	// Get Book Issues By Due Date
 	@Query("SELECT bi FROM BookIssues bi " + "WHERE bi.dueDate = :dueDate")
 	List<BookIssues> findBookIssuesByDueDate(@Param("dueDate") LocalDate dueDate);
+
+	// Student Dashboard
+	@Query("""
+			SELECT b
+			FROM BookIssues b
+			WHERE b.student.user.userId = :userId
+			""")
+	List<BookIssues> getStudentBooks(@Param("userId") Long userId);
+
+	// Parent Dashboard
+	@Query("""
+			SELECT b
+			FROM BookIssues b
+			WHERE b.student.parent.userId = :parentId
+			""")
+	List<BookIssues> getParentBooks(@Param("parentId") Long parentId);
 }

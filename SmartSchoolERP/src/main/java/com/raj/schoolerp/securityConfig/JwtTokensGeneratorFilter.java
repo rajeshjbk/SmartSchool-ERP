@@ -1,4 +1,4 @@
-/*package com.raj.schoolerp.securityConfig;
+package com.raj.schoolerp.securityConfig;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JWTTokkensGeneratorFilter extends OncePerRequestFilter {
+public class JwtTokensGeneratorFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request,
@@ -31,12 +31,13 @@ public class JWTTokkensGeneratorFilter extends OncePerRequestFilter {
 		Authentication authObj = SecurityContextHolder.getContext().getAuthentication();
 
 		if(authObj != null) {
+			
 			//This means user passed authentication sucessfully
 			SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());   
 
-			String jwtToken = Jwts.builder().setIssuer("NARESHIT ECOMMERCE")
-					.setSubject("JWT TOKEN")
-					.claim("username", authObj.getName())
+			String jwtToken = Jwts.builder().setIssuer("RAJ SCHOOL")
+					.setSubject(authObj.getName())
+										
 					.claim("authorities", populateAuthorities(authObj.getAuthorities()))
 					.setIssuedAt(new Date())
 					.setExpiration(new Date(new Date().getTime() + 30000000))
@@ -54,14 +55,13 @@ public class JWTTokkensGeneratorFilter extends OncePerRequestFilter {
 
 			rolesList.add(role.getAuthority());
 		}
-		return String.join(",", rolesList);   //ADMIN GUEST SUPERADMIN
-		//ADMIN,GUEST,SUPERADMIN
+		return String.join(",", rolesList);   
+
 	}
 	
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 		
-		return !request.getServletPath().equals("/school/signIn");
+		return !request.getServletPath().equals("/schoolerp/signIn");
 	}
 }
-*/

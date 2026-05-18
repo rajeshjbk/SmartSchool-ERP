@@ -14,7 +14,7 @@ import com.raj.schoolerp.service.BookIssuesService;
 
 @RestController
 @RequestMapping("/schoolerp/book-issues")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class BookIssuesController {
 
 	@Autowired

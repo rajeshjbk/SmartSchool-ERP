@@ -37,4 +37,26 @@ public interface SubjectsRepository extends JpaRepository<Subjects, Long> {
 	// Get Subjects By Subject Type
 	@Query("SELECT s FROM Subjects s WHERE s.subjectType = :subjectType")
 	List<Subjects> findSubjectsByType(@Param("subjectType") SubjectType subjectType);
+
+	// Teacher Dashboard
+	@Query("""
+			SELECT s
+			FROM Subjects s
+			WHERE s.teacher.teacherId = :teacherId
+			""")
+	List<Subjects> getTeacherSubjects(@Param("teacherId") Long teacherId);
+
+	// Student Dashboard
+	@Query("""
+			SELECT sub
+			FROM Subjects sub
+			JOIN sub.classes c
+			JOIN Students s
+			ON s.classes.classId = c.classId
+			WHERE s.user.userId = :userId
+			""")
+	List<Subjects> getStudentSubjects(@Param("userId") Long userId);
+
+	boolean existsBySubjectCode(String subjectCode);
+
 }

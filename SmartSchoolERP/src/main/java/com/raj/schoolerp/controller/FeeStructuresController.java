@@ -13,7 +13,7 @@ import com.raj.schoolerp.service.FeeStructuresService;
 
 @RestController
 @RequestMapping("/schoolerp/fee-structures")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class FeeStructuresController {
 
 	@Autowired

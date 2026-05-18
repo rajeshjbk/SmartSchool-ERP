@@ -24,4 +24,5 @@ public class ResultsDTO {
     private Boolean isAbsent;
 
     private String remarks;
+    
 }

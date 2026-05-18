@@ -22,7 +22,7 @@ import com.raj.schoolerp.service.TimetableService;
 
 @RestController
 @RequestMapping("/schoolerp/timetable")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TimetableController {
 
 	@Autowired

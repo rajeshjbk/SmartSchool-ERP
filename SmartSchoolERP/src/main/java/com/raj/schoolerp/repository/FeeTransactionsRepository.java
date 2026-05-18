@@ -20,4 +20,20 @@ public interface FeeTransactionsRepository extends JpaRepository<FeeTransactions
 	// Get Fee Transactions By Status
 	@Query("SELECT ft FROM FeeTransactions ft " + "WHERE ft.feeTransactionStatus = :status")
 	List<FeeTransactions> findFeeTransactionsByStatus(@Param("status") FeeTransactionStatus status);
+
+	// Student Dashboard
+	@Query("""
+			SELECT f
+			FROM FeeTransactions f
+			WHERE f.student.user.userId = :userId
+			""")
+	List<FeeTransactions> getStudentFees(@Param("userId") Long userId);
+
+	// Parent Dashboard
+	@Query("""
+			SELECT f
+			FROM FeeTransactions f
+			WHERE f.student.parent.userId = :parentId
+			""")
+	List<FeeTransactions> getParentFees(@Param("parentId") Long parentId);
 }

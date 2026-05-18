@@ -40,7 +40,7 @@ public class BookIssues {
     @JsonIgnoreProperties({
             "bookIssues"
     })
-    private Books books;
+    private Books book;
 
     @ManyToOne
     @JoinColumn(name = "studentId")
@@ -55,11 +55,11 @@ public class BookIssues {
     @JoinColumn(name = "issuedBy")
     @JsonIgnoreProperties({
             "user",
-            "attendances",
-            "results"
+            "classes"
     })
-    private Students issuedBy;
-
+    private Teachers issuedBy;
+    
+  
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate issueDate;
@@ -67,13 +67,13 @@ public class BookIssues {
     @NonNull
     private LocalDate dueDate;
 
-    @NonNull
+    
     private LocalDate returnDate;
 
-    @NonNull
+    
     private Double fineAmount;
 
-    @NonNull
+    
     private Boolean finePaid;
 
     @NonNull

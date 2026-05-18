@@ -33,4 +33,39 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
 	@Query("SELECT t FROM Timetable t " + "JOIN t.classes c " + "WHERE c.classId = :classId "
 			+ "AND t.dayOfWeek = :dayOfWeek " + "ORDER BY t.periodOfTime ASC")
 	List<Timetable> findClassTimetableByDay(@Param("classId") Long classId, @Param("dayOfWeek") DayOfWeek dayOfWeek);
+
+	
+
+		// Teacher Dashboard
+		@Query("""
+				SELECT t
+				FROM Timetable t
+				WHERE t.teachers.teacherId = :teacherId
+				ORDER BY t.dayOfWeek,
+				         t.periodOfTime
+				""")
+		List<Timetable> getTeacherTimetable(@Param("teacherId") Long teacherId);
+
+		// Student Dashboard
+		@Query("""
+				SELECT t
+				FROM Timetable t
+				JOIN t.classes c
+				JOIN Students s
+				ON s.classes.classId = c.classId
+				WHERE s.user.userId = :userId
+				""")
+		List<Timetable> getStudentTimetable(@Param("userId") Long userId);
+
+		// Parent Dashboard
+		@Query("""
+				SELECT t
+				FROM Timetable t
+				JOIN t.classes c
+				JOIN Students s
+				ON s.classes.classId = c.classId
+				WHERE s.parent.userId = :parentId
+				""")
+		List<Timetable> getParentTimetable(@Param("parentId") Long parentId);
+	
 }

@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import com.raj.schoolerp.DTO.ExamSubjectsDTO;
 import com.raj.schoolerp.exception.ExamSubjectsException;
 import com.raj.schoolerp.model.ExamSubjects;
+import com.raj.schoolerp.model.Exams;
+import com.raj.schoolerp.model.Subjects;
 import com.raj.schoolerp.repository.ExamSubjectsRepository;
+import com.raj.schoolerp.repository.ExamsRepository;
+import com.raj.schoolerp.repository.SubjectsRepository;
 import com.raj.schoolerp.service.ExamSubjectsService;
 
 @Service
@@ -19,14 +23,29 @@ public class ExamSubjectsServiceImpl implements ExamSubjectsService {
 	@Autowired
 	private ExamSubjectsRepository examSubjectsRepo;
 
+	@Autowired
+	private SubjectsRepository subjectsRepo;
+
+	@Autowired
+	private ExamsRepository examsRepo;
+
 	@Override
-	public ExamSubjects addExamSubject(ExamSubjectsDTO examSubjectsDTO) throws ExamSubjectsException {
+	public ExamSubjects addExamSubject(ExamSubjectsDTO dto) throws ExamSubjectsException {
 
-		ExamSubjects newExamSubject = new ExamSubjects();
+		Exams exam = examsRepo.findById(dto.getExamId()).orElseThrow(() -> new ExamSubjectsException("Exam not found"));
 
-		BeanUtils.copyProperties(examSubjectsDTO, newExamSubject);
+		Subjects subject = subjectsRepo.findById(dto.getSubjectId())
+				.orElseThrow(() -> new ExamSubjectsException("Subject not found"));
 
-		return examSubjectsRepo.save(newExamSubject);
+		ExamSubjects examSubject = new ExamSubjects();
+
+		BeanUtils.copyProperties(dto, examSubject);
+
+		examSubject.setExam(exam);
+
+		examSubject.setSubjects(subject);
+
+		return examSubjectsRepo.save(examSubject);
 	}
 
 	@Override
@@ -36,7 +55,20 @@ public class ExamSubjectsServiceImpl implements ExamSubjectsService {
 		ExamSubjects existExamSubject = examSubjectsRepo.findById(examSubId)
 				.orElseThrow(() -> new ExamSubjectsException("Exam Subject Not Found"));
 
+		// Fetch Exam
+		Exams exam = examsRepo.findById(examSubjectsDTO.getExamId())
+				.orElseThrow(() -> new ExamSubjectsException("Exam not found"));
+
+		// Fetch Subject
+		Subjects subject = subjectsRepo.findById(examSubjectsDTO.getSubjectId())
+				.orElseThrow(() -> new ExamSubjectsException("Subject not found"));
+
 		BeanUtils.copyProperties(examSubjectsDTO, existExamSubject);
+
+		// Set Relations
+		existExamSubject.setExam(exam);
+
+		existExamSubject.setSubjects(subject);
 
 		return examSubjectsRepo.save(existExamSubject);
 	}

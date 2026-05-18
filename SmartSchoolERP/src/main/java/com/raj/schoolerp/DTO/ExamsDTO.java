@@ -7,6 +7,7 @@ import com.raj.schoolerp.model.ExamStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,8 @@ public class ExamsDTO {
 
     private String academicYear;
 
+    private LocalDate startDate;
+    
     private LocalDate endDate;
 
     private LocalDate resultDate;

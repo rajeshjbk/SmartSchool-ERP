@@ -13,7 +13,7 @@ import com.raj.schoolerp.service.AttendanceService;
 
 @RestController
 @RequestMapping("/schoolerp/attendance")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AttendanceController {
 
 	@Autowired

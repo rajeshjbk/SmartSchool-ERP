@@ -30,12 +30,12 @@ public class Results {
 
 	@ManyToOne
 	@JoinColumn(name = "studentId")
-	@JsonIgnoreProperties({ "user", "attendances", "results" })
+	@JsonIgnoreProperties({ "attendance", "results", "feeTransactions", "bookIssues", "bookIssuedBy" })
 	private Students student;
 
 	@ManyToOne
 	@JoinColumn(name = "examSubjectId")
-	@JsonIgnoreProperties({ "results", "exam", "subjects" })
+	@JsonIgnoreProperties({ "results" })
 	private ExamSubjects examSubjects;
 
 	@NonNull

@@ -47,7 +47,7 @@ public class Students {
 	@ManyToOne
 	@JoinColumn(name = "parentId")
 	@JsonIgnoreProperties({ "password", "students", "listStudents" })
-	private Users users;
+	private Users parent;
 
 	@NonNull
 	@Column(unique = true)
@@ -65,7 +65,7 @@ public class Students {
 
 	@ManyToOne
 	@JoinColumn(name = "classId")
-	@JsonIgnoreProperties({ "students", "subjects", "attendance" })
+	@JsonIgnoreProperties({ "students", "subjects", "attendance", "exams" })
 	private Classes classes;
 
 	@NonNull
@@ -86,10 +86,6 @@ public class Students {
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<BookIssues> bookIssues;
-
-	@OneToMany(mappedBy = "issuedBy", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<BookIssues> bookIssuedBy;
 
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	@JsonIgnore

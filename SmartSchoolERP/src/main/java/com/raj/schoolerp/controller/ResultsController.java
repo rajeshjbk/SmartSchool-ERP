@@ -11,8 +11,8 @@ import com.raj.schoolerp.model.Results;
 import com.raj.schoolerp.service.ResultsService;
 
 @RestController
-@RequestMapping("/results")
-@CrossOrigin("*")
+@RequestMapping("/schoolerp/results")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ResultsController {
 
 	@Autowired

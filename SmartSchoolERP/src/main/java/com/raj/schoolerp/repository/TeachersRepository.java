@@ -22,7 +22,7 @@ public interface TeachersRepository extends JpaRepository<Teachers, Long> {
 	List<Teachers> findByDesignationIgnoreCase(String designation);
 
 	// Find Teachers By Status
-	List<Teachers> findByTeacherStatus(TeacherStatus status) ;
+	List<Teachers> findByTeacherStatus(TeacherStatus status);
 
 	// Find Teacher By User Id
 	Optional<Teachers> findByUserUserId(Long userId);
@@ -35,4 +35,7 @@ public interface TeachersRepository extends JpaRepository<Teachers, Long> {
 
 	// Check Employee Id Exists
 	boolean existsByEmployeeId(String employeeId);
+
+	boolean existsByUser_UserId(Long userId);
+	
 }

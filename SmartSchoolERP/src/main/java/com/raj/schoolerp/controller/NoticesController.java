@@ -20,7 +20,7 @@ import com.raj.schoolerp.service.NoticesService;
 
 @RestController
 @RequestMapping("/schoolerp/notices")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class NoticesController {
 
 	@Autowired

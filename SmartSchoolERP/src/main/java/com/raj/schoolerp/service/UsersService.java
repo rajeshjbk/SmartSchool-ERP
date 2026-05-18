@@ -34,4 +34,5 @@ public interface UsersService {
 	String deleteUsers(List<Long> userIds) throws UsersException;
 
 	public String deactivate(Long userId) throws UsersException;
+
 }

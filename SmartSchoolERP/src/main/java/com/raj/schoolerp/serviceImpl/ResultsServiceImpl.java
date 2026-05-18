@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.ResultsDTO;
 import com.raj.schoolerp.exception.ResultsException;
+import com.raj.schoolerp.model.ExamSubjects;
 import com.raj.schoolerp.model.Results;
+import com.raj.schoolerp.model.Students;
+import com.raj.schoolerp.repository.ExamSubjectsRepository;
 import com.raj.schoolerp.repository.ResultsRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
 import com.raj.schoolerp.service.ResultsService;
 
 @Service
@@ -18,14 +22,30 @@ public class ResultsServiceImpl implements ResultsService {
 	@Autowired
 	private ResultsRepository resultsRepo;
 
+	@Autowired
+	private StudentsRepository studentsRepo;
+
+	@Autowired
+	private ExamSubjectsRepository examSubjectsRepo;
+
 	@Override
-	public Results addResult(ResultsDTO resultsDTO) throws ResultsException {
+	public Results addResult(ResultsDTO dto) throws ResultsException {
 
-		Results newResult = new Results();
+		Students student = studentsRepo.findById(dto.getStudentId())
+				.orElseThrow(() -> new ResultsException("Student not found"));
 
-		BeanUtils.copyProperties(resultsDTO, newResult);
+		ExamSubjects examSubject = examSubjectsRepo.findById(dto.getExamSubjectId())
+				.orElseThrow(() -> new ResultsException("Exam Subject not found"));
 
-		return resultsRepo.save(newResult);
+		Results result = new Results();
+
+		BeanUtils.copyProperties(dto, result);
+
+		result.setStudent(student);
+
+		result.setExamSubjects(examSubject);
+
+		return resultsRepo.save(result);
 	}
 
 	@Override
@@ -34,7 +54,20 @@ public class ResultsServiceImpl implements ResultsService {
 		Results existResult = resultsRepo.findById(resultId)
 				.orElseThrow(() -> new ResultsException("Result Not Found"));
 
+		// Fetch Student
+		Students student = studentsRepo.findById(resultsDTO.getStudentId())
+				.orElseThrow(() -> new ResultsException("Student not found"));
+
+		// Fetch Exam Subject
+		ExamSubjects examSubject = examSubjectsRepo.findById(resultsDTO.getExamSubjectId())
+				.orElseThrow(() -> new ResultsException("Exam Subject not found"));
+
 		BeanUtils.copyProperties(resultsDTO, existResult);
+
+		// Set Relations
+		existResult.setStudent(student);
+
+		existResult.setExamSubjects(examSubject);
 
 		return resultsRepo.save(existResult);
 	}

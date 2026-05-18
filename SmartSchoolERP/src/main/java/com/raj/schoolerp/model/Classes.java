@@ -102,6 +102,6 @@ public class Classes {
     private List<Attendance> attendance;
 
     @CreationTimestamp
-    @Column(insertable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 }

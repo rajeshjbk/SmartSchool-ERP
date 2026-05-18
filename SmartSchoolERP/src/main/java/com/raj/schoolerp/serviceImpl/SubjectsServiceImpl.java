@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.SubjectsDTO;
 import com.raj.schoolerp.exception.SubjectsException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.Subjects;
+import com.raj.schoolerp.model.Teachers;
+import com.raj.schoolerp.repository.ClassesRepository;
 import com.raj.schoolerp.repository.SubjectsRepository;
+import com.raj.schoolerp.repository.TeachersRepository;
 import com.raj.schoolerp.service.SubjectsService;
 
 @Service
@@ -18,30 +22,87 @@ public class SubjectsServiceImpl implements SubjectsService {
 	@Autowired
 	private SubjectsRepository subjectsRepo;
 
-	
+	@Autowired
+	private TeachersRepository teachersRepository;
+
+	@Autowired
+	private ClassesRepository classesRepository;
+
 	@Override
 	public Subjects addSubject(SubjectsDTO subjectDTO) throws SubjectsException {
+
+		// Duplicate subject code check
+		boolean exists = subjectsRepo.existsBySubjectCode(subjectDTO.getSubjectCode());
+
+		if (exists) {
+
+			throw new SubjectsException("Subject already exists with code: " + subjectDTO.getSubjectCode());
+		}
+
+		// Fetch Class
+		Classes classes = null;
+
+		if (subjectDTO.getClassId() != null) {
+
+			classes = classesRepository.findById(subjectDTO.getClassId())
+					.orElseThrow(() -> new SubjectsException("Class not found with id: " + subjectDTO.getClassId()));
+		}
+
+		// Fetch Teacher
+		Teachers teacher = null;
+
+		if (subjectDTO.getTeacherId() != null) {
+
+			teacher = teachersRepository.findById(subjectDTO.getTeacherId()).orElseThrow(
+					() -> new SubjectsException("Teacher not found with id: " + subjectDTO.getTeacherId()));
+		}
 
 		Subjects newSubject = new Subjects();
 
 		BeanUtils.copyProperties(subjectDTO, newSubject);
 
+		// Set relations
+		newSubject.setClasses(classes);
+
+		newSubject.setTeacher(teacher);
+
 		return subjectsRepo.save(newSubject);
 	}
 
-	
 	@Override
 	public Subjects updateSubject(Long subjectId, SubjectsDTO subjectDTO) throws SubjectsException {
 
 		Subjects existSubject = subjectsRepo.findById(subjectId)
 				.orElseThrow(() -> new SubjectsException("Subject Not Found"));
 
+		// Fetch Class
+		Classes classes = null;
+
+		if (subjectDTO.getClassId() != null) {
+
+			classes = classesRepository.findById(subjectDTO.getClassId())
+					.orElseThrow(() -> new SubjectsException("Class not found"));
+		}
+
+		// Fetch Teacher
+		Teachers teacher = null;
+
+		if (subjectDTO.getTeacherId() != null) {
+
+			teacher = teachersRepository.findById(subjectDTO.getTeacherId())
+					.orElseThrow(() -> new SubjectsException("Teacher not found"));
+		}
+
 		BeanUtils.copyProperties(subjectDTO, existSubject);
+
+		// Set relations
+		existSubject.setClasses(classes);
+
+		existSubject.setTeacher(teacher);
 
 		return subjectsRepo.save(existSubject);
 	}
 
-	
 	@Override
 	public String deleteSubject(Long subjectId) throws SubjectsException {
 
@@ -52,21 +113,18 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return "Subject is deleted with Subject ID: " + subjectId;
 	}
 
-	
 	@Override
 	public Subjects getSubjectById(Long subjectId) throws SubjectsException {
 
 		return subjectsRepo.findById(subjectId).orElseThrow(() -> new SubjectsException("Wrong Subject Id"));
 	}
 
-	
 	@Override
 	public List<Subjects> getAllSubjects() throws SubjectsException {
 
 		return subjectsRepo.findAll();
 	}
 
-	
 	@Override
 	public Subjects getSubjectByCode(String subjectCode) throws SubjectsException {
 
@@ -74,7 +132,6 @@ public class SubjectsServiceImpl implements SubjectsService {
 				.orElseThrow(() -> new SubjectsException("Wrong Subject Code"));
 	}
 
-	
 	@Override
 	public List<Subjects> getSubjectsByClassId(Long classId) throws SubjectsException {
 
@@ -88,7 +145,6 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	
 	@Override
 	public List<Subjects> getSubjectsByTeacherId(Long teacherId) throws SubjectsException {
 
@@ -102,7 +158,6 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	
 	@Override
 	public List<Subjects> getElectiveSubjects() throws SubjectsException {
 
@@ -116,7 +171,6 @@ public class SubjectsServiceImpl implements SubjectsService {
 		return subjects;
 	}
 
-	
 	@Override
 	public List<Subjects> getCoreSubjects() throws SubjectsException {
 

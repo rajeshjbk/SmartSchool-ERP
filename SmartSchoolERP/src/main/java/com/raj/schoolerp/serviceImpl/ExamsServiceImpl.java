@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.ExamsDTO;
 import com.raj.schoolerp.exception.ExamsException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.ExamStatus;
 import com.raj.schoolerp.model.Exams;
+import com.raj.schoolerp.repository.ClassesRepository;
 import com.raj.schoolerp.repository.ExamsRepository;
 import com.raj.schoolerp.service.ExamsService;
 
@@ -20,29 +22,40 @@ public class ExamsServiceImpl implements ExamsService {
 	@Autowired
 	private ExamsRepository examsRepo;
 
-	
+	@Autowired
+	private ClassesRepository classesRepository;
+
 	@Override
 	public Exams addExam(ExamsDTO examsDTO) throws ExamsException {
 
-		Exams newExam = new Exams();
+		// Fetch Class
+		Classes classes = classesRepository.findById(examsDTO.getClassId())
+				.orElseThrow(() -> new ExamsException("Class not found with id: " + examsDTO.getClassId()));
 
-		BeanUtils.copyProperties(examsDTO, newExam);
+		Exams exam = new Exams();
 
-		return examsRepo.save(newExam);
+		BeanUtils.copyProperties(examsDTO, exam);
+
+		exam.setClasses(classes);
+
+		return examsRepo.save(exam);
 	}
 
-	
 	@Override
 	public Exams updateExam(Long examId, ExamsDTO examsDTO) throws ExamsException {
 
-		Exams existExam = examsRepo.findById(examId).orElseThrow(() -> new ExamsException("Exam Not Found"));
+		Exams existingExam = examsRepo.findById(examId).orElseThrow(() -> new ExamsException("Exam Not Found"));
 
-		BeanUtils.copyProperties(examsDTO, existExam);
+		Classes classes = classesRepository.findById(examsDTO.getClassId())
+				.orElseThrow(() -> new ExamsException("Class not found"));
 
-		return examsRepo.save(existExam);
+		BeanUtils.copyProperties(examsDTO, existingExam);
+
+		existingExam.setClasses(classes);
+
+		return examsRepo.save(existingExam);
 	}
 
-	
 	@Override
 	public String deleteExam(Long examId) throws ExamsException {
 
@@ -53,21 +66,18 @@ public class ExamsServiceImpl implements ExamsService {
 		return "Exam deleted with Exam ID: " + examId;
 	}
 
-	
 	@Override
 	public Exams getExamById(Long examId) throws ExamsException {
 
 		return examsRepo.findById(examId).orElseThrow(() -> new ExamsException("Wrong Exam Id"));
 	}
 
-	
 	@Override
 	public List<Exams> getAllExams() throws ExamsException {
 
 		return examsRepo.findAll();
 	}
 
-	
 	@Override
 	public List<Exams> getExamsByClassId(Long classId) throws ExamsException {
 
@@ -81,7 +91,6 @@ public class ExamsServiceImpl implements ExamsService {
 		return exams;
 	}
 
-	
 	@Override
 	public List<Exams> getExamsByAcademicYear(String academicYear) throws ExamsException {
 
@@ -95,7 +104,6 @@ public class ExamsServiceImpl implements ExamsService {
 		return exams;
 	}
 
-	
 	@Override
 	public List<Exams> getExamsByStatus(ExamStatus examStatus) throws ExamsException {
 
@@ -109,7 +117,6 @@ public class ExamsServiceImpl implements ExamsService {
 		return exams;
 	}
 
-	
 	@Override
 	public List<Exams> getExamsBetweenDates(LocalDate startDate, LocalDate endDate) throws ExamsException {
 
@@ -123,7 +130,6 @@ public class ExamsServiceImpl implements ExamsService {
 		return exams;
 	}
 
-	
 	@Override
 	public List<Exams> getUpcomingExams() throws ExamsException {
 

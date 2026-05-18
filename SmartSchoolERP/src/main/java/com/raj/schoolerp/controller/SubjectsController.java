@@ -12,7 +12,7 @@ import com.raj.schoolerp.service.SubjectsService;
 
 @RestController
 @RequestMapping("/schoolerp/subjects")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class SubjectsController {
 
 	@Autowired

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.UsersDTO;
@@ -19,11 +20,16 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UsersRepository usersRepo;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public Users addUser(UsersDTO usersDTO) throws UsersException {
 
 		Users newUser = new Users();
-
+        
+		usersDTO.setPassword(passwordEncoder.encode(usersDTO.getPassword()));
+		
 		BeanUtils.copyProperties(usersDTO, newUser);
 
 		return usersRepo.save(newUser);
@@ -33,7 +39,8 @@ public class UsersServiceImpl implements UsersService {
 	public Users updateUser(Long userId, UsersDTO usersDTO) throws UsersException {
 
 		Users existUser = usersRepo.findById(userId).orElseThrow(() -> new UsersException("User Not Found"));
-
+		
+		usersDTO.setPassword(passwordEncoder.encode(usersDTO.getPassword()));
 		BeanUtils.copyProperties(usersDTO, existUser);
 
 		return usersRepo.save(existUser);

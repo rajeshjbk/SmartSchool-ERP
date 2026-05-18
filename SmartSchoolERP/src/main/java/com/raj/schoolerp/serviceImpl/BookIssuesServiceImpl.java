@@ -11,7 +11,13 @@ import com.raj.schoolerp.DTO.BookIssuesDTO;
 import com.raj.schoolerp.exception.BookIssuesException;
 import com.raj.schoolerp.model.BookIssues;
 import com.raj.schoolerp.model.BookStatus;
+import com.raj.schoolerp.model.Books;
+import com.raj.schoolerp.model.Students;
+import com.raj.schoolerp.model.Teachers;
 import com.raj.schoolerp.repository.BookIssuesRepository;
+import com.raj.schoolerp.repository.BooksRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
+import com.raj.schoolerp.repository.TeachersRepository;
 import com.raj.schoolerp.service.BookIssuesService;
 
 @Service
@@ -20,12 +26,38 @@ public class BookIssuesServiceImpl implements BookIssuesService {
 	@Autowired
 	private BookIssuesRepository bookIssuesRepo;
 
+	@Autowired
+	private TeachersRepository teachersRepo;
+
+	@Autowired
+	private BooksRepository booksRepo;
+
+	@Autowired
+	private StudentsRepository studentsRepo;
+
 	@Override
 	public BookIssues issueBook(BookIssuesDTO bookIssuesDTO) throws BookIssuesException {
 
 		BookIssues newBookIssue = new BookIssues();
 
 		BeanUtils.copyProperties(bookIssuesDTO, newBookIssue);
+
+		// Fetch Book
+		Books book = booksRepo.findById(bookIssuesDTO.getBookId())
+				.orElseThrow(() -> new BookIssuesException("Book Not Found"));
+
+		// Fetch Student
+		Students student = studentsRepo.findById(bookIssuesDTO.getStudentId())
+				.orElseThrow(() -> new BookIssuesException("Student Not Found"));
+
+		// Fetch Teacher (Issued By)
+		Teachers teacher = teachersRepo.findById(bookIssuesDTO.getIssuedBy())
+				.orElseThrow(() -> new BookIssuesException("Teacher Not Found"));
+
+		// Set Relationships
+		newBookIssue.setBook(book);
+		newBookIssue.setStudent(student);
+		newBookIssue.setIssuedBy(teacher);
 
 		return bookIssuesRepo.save(newBookIssue);
 	}
@@ -37,6 +69,23 @@ public class BookIssuesServiceImpl implements BookIssuesService {
 				.orElseThrow(() -> new BookIssuesException("Book Issue Not Found"));
 
 		BeanUtils.copyProperties(bookIssuesDTO, existBookIssue);
+
+		// Fetch Book
+		Books book = booksRepo.findById(bookIssuesDTO.getBookId())
+				.orElseThrow(() -> new BookIssuesException("Book Not Found"));
+
+		// Fetch Student
+		Students student = studentsRepo.findById(bookIssuesDTO.getStudentId())
+				.orElseThrow(() -> new BookIssuesException("Student Not Found"));
+
+		// Fetch Teacher
+		Teachers teacher = teachersRepo.findById(bookIssuesDTO.getIssuedBy())
+				.orElseThrow(() -> new BookIssuesException("Teacher Not Found"));
+
+		// Set Relationships
+		existBookIssue.setBook(book);
+		existBookIssue.setStudent(student);
+		existBookIssue.setIssuedBy(teacher);
 
 		return bookIssuesRepo.save(existBookIssue);
 	}

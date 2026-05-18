@@ -13,8 +13,8 @@ import com.raj.schoolerp.model.Exams;
 import com.raj.schoolerp.service.ExamsService;
 
 @RestController
-@RequestMapping("/exams")
-@CrossOrigin("*")
+@RequestMapping("/schoolerp/exams")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ExamsController {
 
 	@Autowired
