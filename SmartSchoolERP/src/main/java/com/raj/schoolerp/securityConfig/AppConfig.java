@@ -1,15 +1,10 @@
 package com.raj.schoolerp.securityConfig;
 
 import java.util.Arrays;
-import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,153 +24,170 @@ public class AppConfig {
 
 		http
 
-		// Stateless Session
-		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				// Stateless Session
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-		// CORS
-		.cors(cors -> {
+				// CORS
+				.cors(cors -> {
 
-			cors.configurationSource(new CorsConfigurationSource() {
+					cors.configurationSource(new CorsConfigurationSource() {
 
-				@Override
-				public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+						@Override
+						public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
-					CorsConfiguration cfg = new CorsConfiguration();
+							CorsConfiguration cfg = new CorsConfiguration();
 
-					cfg.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+							cfg.setAllowedOrigins(Arrays.asList(
+									"http://localhost:5173",
+									"https://smartschool-erp.onrender.com"));
 
-					cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+							cfg.setAllowedMethods(Arrays.asList(
+									"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 
-					cfg.setAllowCredentials(true);
+							cfg.setAllowCredentials(true);
 
-					cfg.setAllowedHeaders(Collections.singletonList("*"));
+							cfg.setAllowedHeaders(Arrays.asList("*"));
 
-					cfg.setExposedHeaders(Arrays.asList("Authorization"));
+							cfg.setExposedHeaders(Arrays.asList("Authorization"));
 
-					return cfg;
-				}
-			});
-		})
+							return cfg;
+						}
+					});
+				})
 
-		// Authorization
-		.authorizeHttpRequests(auth -> {
+				// Authorization
+				.authorizeHttpRequests(auth -> {
 
-			auth
+					auth
 
-			// PUBLIC APIs
-			.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+							// PUBLIC APIs
+							.requestMatchers(
+									"/",
+									"/swagger-ui/**",
+									"/v3/api-docs/**",
+									"/schoolerp/signIn",
+									"/schoolerp/users/add")
+							.permitAll()
 
-			.requestMatchers("/schoolerp/signIn", "/schoolerp/users/add").permitAll()
+							// ================= ADMIN =================
 
-			// ================= ADMIN =================
+							.requestMatchers(HttpMethod.POST,
+									"/schoolerp/users/**",
+									"/schoolerp/teachers/**",
+									"/schoolerp/students/**",
+									"/schoolerp/classes/**",
+									"/schoolerp/subjects/**",
+									"/schoolerp/timetable/**",
+									"/schoolerp/books/**",
+									"/schoolerp/book-issues/**",
+									"/schoolerp/fee-structures/**",
+									"/schoolerp/fee-transactions/**",
+									"/schoolerp/exam-subjects/**",
+									"/schoolerp/exams/**")
+							.hasRole("ADMIN")
 
-			.requestMatchers(HttpMethod.POST, "/schoolerp/users/**", "/schoolerp/teachers/**",
-					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
-					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
-					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**")
-			.hasRole("ADMIN")
+							.requestMatchers(HttpMethod.PUT,
+									"/schoolerp/users/**",
+									"/schoolerp/teachers/**",
+									"/schoolerp/students/**",
+									"/schoolerp/classes/**",
+									"/schoolerp/subjects/**",
+									"/schoolerp/timetable/**",
+									"/schoolerp/books/**",
+									"/schoolerp/book-issues/**",
+									"/schoolerp/fee-structures/**",
+									"/schoolerp/fee-transactions/**",
+									"/schoolerp/exam-subjects/**",
+									"/schoolerp/exams/**")
+							.hasRole("ADMIN")
 
-			.requestMatchers(HttpMethod.PUT, "/schoolerp/users/**", "/schoolerp/teachers/**",
-					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
-					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
-					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**")
-			.hasRole("ADMIN")
+							.requestMatchers(HttpMethod.DELETE,
+									"/schoolerp/users/**",
+									"/schoolerp/teachers/**",
+									"/schoolerp/students/**",
+									"/schoolerp/classes/**",
+									"/schoolerp/subjects/**",
+									"/schoolerp/timetable/**",
+									"/schoolerp/books/**",
+									"/schoolerp/book-issues/**",
+									"/schoolerp/fee-structures/**",
+									"/schoolerp/fee-transactions/**",
+									"/schoolerp/exam-subjects/**",
+									"/schoolerp/exams/**",
+									"/schoolerp/results/**",
+									"/schoolerp/notices/**")
+							.hasRole("ADMIN")
 
-			.requestMatchers(HttpMethod.DELETE, "/schoolerp/users/**", "/schoolerp/teachers/**",
-					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
-					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
-					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**",
-					"/schoolerp/notices/**")
-			.hasRole("ADMIN")
+							// ================= TEACHER =================
 
-			// ================= TEACHER =================
+							.requestMatchers(HttpMethod.POST,
+									"/schoolerp/attendance/**",
+									"/schoolerp/results/**",
+									"/schoolerp/notices/add")
+							.hasAnyRole("ADMIN", "TEACHER")
 
-			.requestMatchers(HttpMethod.POST,
-			        "/schoolerp/attendance/**",
-			        "/schoolerp/results/**",
-			        "/schoolerp/notices/add")
-			.hasAnyRole("ADMIN", "TEACHER")
+							.requestMatchers(HttpMethod.PUT,
+									"/schoolerp/attendance/**",
+									"/schoolerp/notices/**",
+									"/schoolerp/results/**")
+							.hasAnyRole("ADMIN", "TEACHER")
 
-			.requestMatchers(HttpMethod.PUT, "/schoolerp/attendance/**", "/schoolerp/notices/**","/schoolerp/results/**")
-			.hasAnyRole("ADMIN", "TEACHER")
+							// ================= STUDENT =================
 
-			// ================= STUDENT =================
+							.requestMatchers(HttpMethod.POST,
+									"/schoolerp/leave-applications/apply")
+							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
-			.requestMatchers(HttpMethod.POST,
-			        "/schoolerp/leave-applications/apply")
-			.hasAnyRole(
-			        "ADMIN",
-			        "TEACHER",
-			        "STUDENT",
-			        "PARENT"
-			)
-			.requestMatchers(HttpMethod.PUT,
-			        "/schoolerp/leave-applications/**")
-			.hasAnyRole(
-			        "ADMIN",
-			        "TEACHER",
-			        "STUDENT",
-			        "PARENT"
-			)
+							.requestMatchers(HttpMethod.PUT,
+									"/schoolerp/leave-applications/**")
+							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
-			// ================= PARENT =================
+							// ================= PARENT =================
 
-			.requestMatchers(
-			        "/schoolerp/students/parent/**"
-			)
-			.hasAnyRole(
-			        "ADMIN",
-			        "PARENT"
-			)
+							.requestMatchers("/schoolerp/students/parent/**")
+							.hasAnyRole("ADMIN", "PARENT")
 
-			// ================= COMMON GET =================
+							// ================= COMMON GET =================
 
-			.requestMatchers(HttpMethod.GET,
-			        "/schoolerp/students/**",
-			        "/schoolerp/teachers/**",
-			        "/schoolerp/classes/**",
-			        "/schoolerp/subjects/**",
-			        "/schoolerp/attendance/**",
-			        "/schoolerp/results/**",
-			        "/schoolerp/timetable/**",
-			        "/schoolerp/books/**",
-			        "/schoolerp/book-issues/**",
-			        "/schoolerp/fee-transactions/**",
-			        "/schoolerp/fee-structures/**",
-			        "/schoolerp/notices/**",
-			        "/schoolerp/exams/**",
-			        "/schoolerp/exam-subjects/**",
-			        "/schoolerp/leave-applications/**")
-			.hasAnyRole(
-			        "ADMIN",
-			        "TEACHER",
-			        "STUDENT",
-			        "PARENT"
-			)
+							.requestMatchers(HttpMethod.GET,
+									"/schoolerp/students/**",
+									"/schoolerp/teachers/**",
+									"/schoolerp/classes/**",
+									"/schoolerp/subjects/**",
+									"/schoolerp/attendance/**",
+									"/schoolerp/results/**",
+									"/schoolerp/timetable/**",
+									"/schoolerp/books/**",
+									"/schoolerp/book-issues/**",
+									"/schoolerp/fee-transactions/**",
+									"/schoolerp/fee-structures/**",
+									"/schoolerp/notices/**",
+									"/schoolerp/exams/**",
+									"/schoolerp/exam-subjects/**",
+									"/schoolerp/leave-applications/**")
+							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
-			.anyRequest().authenticated();
-		})
+							.anyRequest().authenticated();
+				})
 
-		// Disable CSRF
-		.csrf(csrf -> csrf.disable())
+				// Disable CSRF
+				.csrf(csrf -> csrf.disable())
 
-		// JWT Filters
-		.addFilterAfter(new JwtTokensGeneratorFilter(), BasicAuthenticationFilter.class)
+				// JWT Filters
+				.addFilterAfter(new JwtTokensGeneratorFilter(), BasicAuthenticationFilter.class)
 
-		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+				.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 
-		// HTTP BASIC LOGIN
-		.httpBasic(Customizer.withDefaults());
+				// Disable browser popup login
+				.httpBasic(httpBasic -> httpBasic.disable())
+
+				.formLogin(form -> form.disable());
 
 		return http.build();
 	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-
 		return new BCryptPasswordEncoder();
 	}
 }
