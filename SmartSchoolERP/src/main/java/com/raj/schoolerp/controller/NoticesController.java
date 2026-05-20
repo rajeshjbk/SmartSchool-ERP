@@ -3,7 +3,10 @@ package com.raj.schoolerp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,5 +64,21 @@ public class NoticesController {
 	public List<Notices> getActiveNotices() throws NoticesException {
 
 		return noticesService.getActiveNotices();
+	}
+
+	@GetMapping("/parent")
+	public ResponseEntity<List<Notices>> getParentNoticesHandler() throws NoticesException {
+
+		List<Notices> notices = noticesService.getParentNotices();
+
+		return new ResponseEntity<>(notices, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete/{noticeId}")
+	public ResponseEntity<String> deleteNotice(@PathVariable Long noticeId) throws NoticesException {
+
+		noticesService.deleteNotice(noticeId);
+
+		return new ResponseEntity<>("Notice deleted successfully", HttpStatus.OK);
 	}
 }

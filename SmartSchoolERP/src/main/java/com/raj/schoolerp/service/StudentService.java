@@ -22,5 +22,7 @@ public interface StudentService {
 	public List<Students> getAllStudents() throws StudentsException;
 
 	List<Students> getStudentByRole(UserRole role) throws StudentsException;
+	
+	public List<Students> getStudentByParentId(Long parentId) throws StudentsException;
 
 }

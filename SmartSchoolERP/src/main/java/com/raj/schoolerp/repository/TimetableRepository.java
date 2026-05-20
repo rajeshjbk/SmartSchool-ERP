@@ -68,4 +68,5 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
 				""")
 		List<Timetable> getParentTimetable(@Param("parentId") Long parentId);
 	
+		List<Timetable> findByClassesClassId(Long classId);
 }

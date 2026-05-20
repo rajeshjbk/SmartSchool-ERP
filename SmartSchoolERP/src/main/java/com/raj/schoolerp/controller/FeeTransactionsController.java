@@ -3,7 +3,16 @@ package com.raj.schoolerp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.raj.schoolerp.DTO.FeeTransactionsDTO;
 import com.raj.schoolerp.exception.FeeTransactionsException;
@@ -57,5 +66,14 @@ public class FeeTransactionsController {
 			throws FeeTransactionsException {
 
 		return feeTransactionsService.getFeeTransactionsByStatus(status);
+	}
+
+	@GetMapping("/parent/{parentId}")
+	public ResponseEntity<List<FeeTransactions>> getParentFeesHandler(@PathVariable Long parentId)
+			throws FeeTransactionsException {
+
+		List<FeeTransactions> fees = feeTransactionsService.getParentFees(parentId);
+
+		return new ResponseEntity<>(fees, HttpStatus.OK);
 	}
 }

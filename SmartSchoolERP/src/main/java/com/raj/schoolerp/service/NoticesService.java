@@ -26,4 +26,8 @@ public interface NoticesService {
 
 	// Get Active Notices
 	List<Notices> getActiveNotices() throws NoticesException;
+	
+	List<Notices> getParentNotices() throws NoticesException;
+	
+	void deleteNotice(Long noticeId) throws NoticesException;
 }

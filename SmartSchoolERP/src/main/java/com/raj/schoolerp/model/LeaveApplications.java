@@ -52,9 +52,9 @@ public class LeaveApplications {
 	@NonNull
 	private String reason;
 
-	@NonNull
+	
 	@Enumerated(EnumType.STRING)
-	private LeaveStatus leaveStatus;
+	private LeaveStatus leaveStatus = LeaveStatus.PENDING;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")
@@ -62,9 +62,9 @@ public class LeaveApplications {
 	private Users user;
 
 	@ManyToOne
-	@JoinColumn(name = "approvedBy")
+	@JoinColumn(name = "approvedById")
 	@JsonIgnoreProperties({ "password", "appliedApplications", "approvedApplications" })
-	private Users approvedBy;
+	private Users approvedById;
 
 	private String rejectionNote;
 

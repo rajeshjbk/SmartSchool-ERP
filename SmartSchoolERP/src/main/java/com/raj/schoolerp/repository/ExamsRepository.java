@@ -28,10 +28,18 @@ public interface ExamsRepository extends JpaRepository<Exams, Long> {
 
 	// Get Exams Between Dates
 	@Query("SELECT e FROM Exams e " + "WHERE e.startDate >= :startDate " + "AND e.endDate <= :endDate")
-	List<Exams> findExamsBetweenDates(@Param("startDate") LocalDate startDate,
-			@Param("endDate") LocalDate endDate);
+	List<Exams> findExamsBetweenDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 	// Get Upcoming Exams
 	@Query("SELECT e FROM Exams e " + "WHERE e.startDate > CURRENT_DATE")
 	List<Exams> findUpcomingExams();
+
+	@Query("""
+			SELECT DISTINCT r.examSubjects.exam
+			FROM Results r
+			WHERE r.student.parent.userId = :parentId
+			""")
+	List<Exams> getParentExams(@Param("parentId") Long parentId);
+
+	List<Exams> findByClassesClassId(Long classId);
 }

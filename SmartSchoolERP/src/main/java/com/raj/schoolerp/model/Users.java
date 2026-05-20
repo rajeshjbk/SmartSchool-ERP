@@ -86,7 +86,7 @@ public class Users {
 	@JsonIgnore
 	private List<LeaveApplications> appliedApplications;
 
-	@OneToMany(mappedBy = "approvedBy", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "approvedById", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<LeaveApplications> approvedApplications;
 

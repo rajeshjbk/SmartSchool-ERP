@@ -34,4 +34,9 @@ public interface ResultsService {
 
 	// Get Class Rank List
 	List<Results> getRankList() throws ResultsException;
+
+	List<Results> getMyResults(String username) throws ResultsException;
+	
+	 List<Results> getParentResults(Long parentId) throws ResultsException;
+	 
 }

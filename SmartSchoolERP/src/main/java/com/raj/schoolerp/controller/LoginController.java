@@ -24,32 +24,50 @@ public class LoginController {
 
 	@PostMapping("/signIn")
 	public ResponseEntity<UserSigninDetail> getLoggedInUsersDetailsHandler(Authentication authObj)
-			throws UsersException {
+	        throws UsersException {
 
-		if (authObj == null) {
+	    if (authObj == null) {
+	        throw new UsersException("Invalid Username or Password");
+	    }
 
-			throw new UsersException("Invalid Username or Password");
-		}
+	    try {
 
-		try {
+	        Users userObj = usersService.getUserByUserName(authObj.getName());
 
-			Users userObj = usersService.getUserByUserName(authObj.getName());
+	        if (userObj == null) {
+	            throw new UsersException("User Not Found");
+	        }
 
-			UserSigninDetail signinSuccessData = new UserSigninDetail();
+	        UserSigninDetail signinSuccessData = new UserSigninDetail();
 
-			signinSuccessData.setId(userObj.getUserId());
+	        signinSuccessData.setId(userObj.getUserId());
+	        signinSuccessData.setFullName(userObj.getFullName());
+	        signinSuccessData.setSignInStatus("SUCCESS");
+	        signinSuccessData.setUserRole(userObj.getRole().toString());
 
-			signinSuccessData.setFullName(userObj.getFullName());
+	        // STUDENT
+	        if (userObj.getStudents() != null) {
 
-			signinSuccessData.setSignInStatus("SUCCESS");
+	            signinSuccessData.setStudentId(
+	                    userObj.getStudents().getStudentId()
+	            );
+	        }
 
-			signinSuccessData.setUserRole(userObj.getRole().toString());
+	        // TEACHER
+	        if (userObj.getTeachers() != null &&
+	                !userObj.getTeachers().isEmpty()) {
 
-			return new ResponseEntity<>(signinSuccessData, HttpStatus.OK);
+	            signinSuccessData.setTeacherId(
+	                    userObj.getTeachers().get(0).getTeacherId()
+	            );
+	        }
 
-		} catch (Exception e) {
+	        return new ResponseEntity<>(signinSuccessData, HttpStatus.OK);
 
-			throw new UsersException("Invalid Username or Password");
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace(); // check actual error in console
+	        throw new UsersException("Invalid Username or Password");
+	    }
 	}
+	
 }

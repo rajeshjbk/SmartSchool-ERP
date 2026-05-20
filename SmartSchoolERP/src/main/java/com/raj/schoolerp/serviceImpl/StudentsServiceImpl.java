@@ -158,4 +158,15 @@ public class StudentsServiceImpl implements StudentService {
 		return students;
 	}
 
+	@Override
+	public List<Students> getStudentByParentId(Long parentId) {
+
+		List<Students> students = studentsRepo.getStudentByParentId(parentId);
+
+		if (students.isEmpty()) {
+			throw new RuntimeException("No child found");
+		}
+
+		return students;
+	}
 }

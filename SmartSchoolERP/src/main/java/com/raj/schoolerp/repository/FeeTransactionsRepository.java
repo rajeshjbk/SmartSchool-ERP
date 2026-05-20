@@ -1,6 +1,7 @@
 package com.raj.schoolerp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,10 @@ public interface FeeTransactionsRepository extends JpaRepository<FeeTransactions
 			WHERE f.student.parent.userId = :parentId
 			""")
 	List<FeeTransactions> getParentFees(@Param("parentId") Long parentId);
+
+	List<FeeTransactions> findFeeTransactionsByStudentStudentId(Long studentId);
+
+	List<FeeTransactions> findByFeeTransactionStatus(FeeTransactionStatus feeTransactionStatus);
+
+	Optional<FeeTransactions> findTopByOrderByFeeTransactionsIdDesc();
 }

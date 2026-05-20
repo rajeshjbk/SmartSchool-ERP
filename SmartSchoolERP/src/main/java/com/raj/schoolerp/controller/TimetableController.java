@@ -3,6 +3,8 @@ package com.raj.schoolerp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,5 +90,20 @@ public class TimetableController {
 			throws TimetableException {
 
 		return timetableService.getClassTimetableByDay(classId, dayOfWeek);
+	}
+
+	@GetMapping("/student/{userId}")
+	public List<Timetable> getStudentTimetable(@PathVariable Long userId) throws TimetableException {
+
+		return timetableService.getStudentTimetable(userId);
+	}
+
+	@GetMapping("/parent/{parentId}")
+	public ResponseEntity<List<Timetable>> getParentTimetableHandler(@PathVariable Long parentId)
+			throws TimetableException {
+
+		List<Timetable> timetable = timetableService.getParentTimetable(parentId);
+
+		return new ResponseEntity<>(timetable, HttpStatus.OK);
 	}
 }

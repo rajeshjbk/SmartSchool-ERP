@@ -3,7 +3,18 @@ package com.raj.schoolerp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.raj.schoolerp.DTO.ResultsDTO;
 import com.raj.schoolerp.exception.ResultsException;
@@ -71,5 +82,19 @@ public class ResultsController {
 	public List<Results> getRankList() throws ResultsException {
 
 		return resultsService.getRankList();
+	}
+
+	@GetMapping("/my-result")
+	public List<Results> getMyResults(Authentication authentication) throws ResultsException {
+
+		return resultsService.getMyResults(authentication.getName());
+	}
+
+	@GetMapping("/parent/{parentId}")
+	public ResponseEntity<List<Results>> getParentResultsHandler(@PathVariable Long parentId) throws ResultsException {
+
+		List<Results> results = resultsService.getParentResults(parentId);
+
+		return new ResponseEntity<>(results, HttpStatus.OK);
 	}
 }

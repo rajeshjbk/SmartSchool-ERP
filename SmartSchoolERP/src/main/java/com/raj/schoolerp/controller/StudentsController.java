@@ -71,4 +71,12 @@ public class StudentsController {
 
 		return new ResponseEntity<>(studentService.getStudentByRole(role), HttpStatus.OK);
 	}
+
+	@GetMapping("/parent/{parentId}")
+	public ResponseEntity<List<Students>> getStudentByParentIdHandler(@PathVariable Long parentId) throws StudentsException {
+
+		List<Students> students = studentService.getStudentByParentId(parentId);
+
+		return new ResponseEntity<>(students, HttpStatus.OK);
+	}
 }

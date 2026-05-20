@@ -11,9 +11,11 @@ import com.raj.schoolerp.exception.ResultsException;
 import com.raj.schoolerp.model.ExamSubjects;
 import com.raj.schoolerp.model.Results;
 import com.raj.schoolerp.model.Students;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.repository.ExamSubjectsRepository;
 import com.raj.schoolerp.repository.ResultsRepository;
 import com.raj.schoolerp.repository.StudentsRepository;
+import com.raj.schoolerp.repository.UsersRepository;
 import com.raj.schoolerp.service.ResultsService;
 
 @Service
@@ -21,6 +23,9 @@ public class ResultsServiceImpl implements ResultsService {
 
 	@Autowired
 	private ResultsRepository resultsRepo;
+
+	@Autowired
+	private UsersRepository usersRepo;
 
 	@Autowired
 	private StudentsRepository studentsRepo;
@@ -141,6 +146,28 @@ public class ResultsServiceImpl implements ResultsService {
 		if (results.isEmpty()) {
 
 			throw new ResultsException("Rank List Not Found");
+		}
+
+		return results;
+	}
+
+	@Override
+	public List<Results> getMyResults(String username) throws ResultsException {
+
+		Users user = usersRepo.findByUserName(username).orElseThrow(() -> new ResultsException("User Not Found"));
+
+		Students student = studentsRepo.findByUser(user).orElseThrow(() -> new ResultsException("Student Not Found"));
+
+		return resultsRepo.findResultsByStudentId(student.getStudentId());
+	}
+
+	@Override
+	public List<Results> getParentResults(Long parentId) throws ResultsException {
+
+		List<Results> results = resultsRepo.getParentResults(parentId);
+
+		if (results.isEmpty()) {
+			throw new ResultsException("No Results Found For This Parent");
 		}
 
 		return results;

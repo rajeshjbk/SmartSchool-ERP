@@ -37,4 +37,6 @@ public interface SubjectsService {
 
 	// Get Core Subjects
 	List<Subjects> getCoreSubjects() throws SubjectsException;
+
+	List<Subjects> getMySubjects(String username) throws SubjectsException;
 }

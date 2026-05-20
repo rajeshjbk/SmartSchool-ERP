@@ -1,6 +1,7 @@
 package com.raj.schoolerp.serviceImpl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -175,5 +176,17 @@ public class BookIssuesServiceImpl implements BookIssuesService {
 		}
 
 		return bookIssues;
+	}
+
+	@Override
+	public List<BookIssues> getParentBooks(Long parentId) throws BookIssuesException {
+
+		List<BookIssues> books = bookIssuesRepo.getParentBooks(parentId);
+
+		if (books == null || books.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return books;
 	}
 }

@@ -24,11 +24,11 @@ public class LeaveApplicationsDTO {
 
     private String reason;
 
-    private LeaveStatus leaveStatus;
+//    private LeaveStatus leaveStatus;
 
     private Long userId;
 
-    private Long approvedBy;
+    private Long approvedById;
 
     private String rejectionNote;
 }

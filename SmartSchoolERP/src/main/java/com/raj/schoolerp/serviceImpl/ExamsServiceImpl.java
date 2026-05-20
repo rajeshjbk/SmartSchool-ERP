@@ -12,8 +12,12 @@ import com.raj.schoolerp.exception.ExamsException;
 import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.ExamStatus;
 import com.raj.schoolerp.model.Exams;
+import com.raj.schoolerp.model.Students;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.repository.ClassesRepository;
 import com.raj.schoolerp.repository.ExamsRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
+import com.raj.schoolerp.repository.UsersRepository;
 import com.raj.schoolerp.service.ExamsService;
 
 @Service
@@ -21,6 +25,12 @@ public class ExamsServiceImpl implements ExamsService {
 
 	@Autowired
 	private ExamsRepository examsRepo;
+
+	@Autowired
+	private UsersRepository usersRepo;
+
+	@Autowired
+	private StudentsRepository studentRepo;
 
 	@Autowired
 	private ClassesRepository classesRepository;
@@ -141,5 +151,35 @@ public class ExamsServiceImpl implements ExamsService {
 		}
 
 		return exams;
+	}
+
+	@Override
+	public List<Exams> getMyExams(String username) throws ExamsException {
+		// Get User
+		Users user = usersRepo.findByUserName(username).orElseThrow(() -> new ExamsException("User Not Found"));
+
+		// Get Student
+		Students student = studentRepo.findByUser(user).orElseThrow(() -> new ExamsException("Student Not Found"));
+
+		// Get Student Class
+		Long classId = student.getClasses().getClassId();
+
+		// Fetch Exams by Class
+		List<Exams> exams = examsRepo.findByClassesClassId(classId);
+
+		if (exams.isEmpty()) {
+			throw new ExamsException("No Exams Found");
+		}
+
+		return exams;
+	}
+	@Override
+	public List<Exams> getParentExams(Long parentId)
+	        throws ExamsException {
+
+	    List<Exams> exams =
+	            examsRepo.getParentExams(parentId);
+
+	    return exams;
 	}
 }

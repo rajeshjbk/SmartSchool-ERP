@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.raj.schoolerp.DTO.ExamSubjectsDTO;
 import com.raj.schoolerp.exception.ExamSubjectsException;
+import com.raj.schoolerp.exception.ExamsException;
 import com.raj.schoolerp.model.ExamSubjects;
+import com.raj.schoolerp.model.Exams;
 
 public interface ExamSubjectsService {
 

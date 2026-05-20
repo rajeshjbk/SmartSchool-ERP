@@ -39,4 +39,6 @@ public interface BookIssuesService {
 
 	// Get Book Issues By Due Date
 	List<BookIssues> getBookIssuesByDueDate(LocalDate dueDate) throws BookIssuesException;
+
+	List<BookIssues> getParentBooks(Long parentId) throws BookIssuesException;
 }

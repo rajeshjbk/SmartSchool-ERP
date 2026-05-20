@@ -64,7 +64,6 @@ public class Notices {
 	@NonNull
 	private LocalDate expiryDate;
 
-	@NonNull
 	private String attachment;
 
 	@NonNull

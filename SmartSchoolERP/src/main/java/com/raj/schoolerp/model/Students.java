@@ -41,12 +41,12 @@ public class Students {
 
 	@OneToOne
 	@JoinColumn(name = "userId")
-	@JsonIgnoreProperties({ "password", "students", "listStudents" })
+	@JsonIgnoreProperties({ "password", "listStudents" })
 	private Users user;
 
 	@ManyToOne
 	@JoinColumn(name = "parentId")
-	@JsonIgnoreProperties({ "password", "students", "listStudents" })
+	@JsonIgnoreProperties({ "password"})
 	private Users parent;
 
 	@NonNull

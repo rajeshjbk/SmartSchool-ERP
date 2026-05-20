@@ -27,4 +27,6 @@ public interface FeeTransactionsService {
 
 	// Get Fee Transactions By Status
 	List<FeeTransactions> getFeeTransactionsByStatus(FeeTransactionStatus status) throws FeeTransactionsException;
+
+	List<FeeTransactions> getParentFees(Long parentId) throws FeeTransactionsException;
 }

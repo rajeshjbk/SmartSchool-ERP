@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 public class UserSigninDetail {
 
 	private Long id;
+	private Long teacherId;
 	private String fullName;
 	private String signInStatus;
 	private String userRole;
+	private Long studentId;
 	
 }

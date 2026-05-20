@@ -2,6 +2,8 @@ package com.raj.schoolerp.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import com.raj.schoolerp.DTO.TimetableDTO;
 import com.raj.schoolerp.exception.TimetableException;
 import com.raj.schoolerp.model.DayOfWeek;
@@ -38,4 +40,8 @@ public interface TimetableService {
 
 	// Get Class Timetable By Day
 	List<Timetable> getClassTimetableByDay(Long classId, DayOfWeek dayOfWeek) throws TimetableException;
+
+	List<Timetable> getStudentTimetable(Long userId) throws TimetableException;
+
+	List<Timetable> getParentTimetable(Long parentId) throws TimetableException;
 }

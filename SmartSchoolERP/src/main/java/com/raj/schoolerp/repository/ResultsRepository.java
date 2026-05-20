@@ -38,10 +38,11 @@ public interface ResultsRepository extends JpaRepository<Results, Long> {
 
 	// Parent Dashboard
 	@Query("""
-			SELECT r
-			FROM Results r
-			WHERE r.student.parent.userId = :parentId
-			""")
+	        SELECT r
+	        FROM Results r
+	        JOIN FETCH r.student s
+	        WHERE s.parent.userId = :parentId
+	        """)
 	List<Results> getParentResults(@Param("parentId") Long parentId);
 
 	// Teacher Dashboard

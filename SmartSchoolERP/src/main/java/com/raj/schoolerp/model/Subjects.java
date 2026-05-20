@@ -30,55 +30,42 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 public class Subjects {
 
-    @Id
-    @GeneratedValue(strategy =
-            GenerationType.IDENTITY)
-    private Long subjectId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long subjectId;
 
-    @NonNull
-    @Column(length = 30)
-    private String subjectName;
+	@NonNull
+	@Column(length = 30)
+	private String subjectName;
 
-    @NonNull
-    @Column(length = 30,
-            unique = true)
-    private String subjectCode;
+	@NonNull
+	@Column(length = 30, unique = true)
+	private String subjectCode;
 
-    @NonNull
-    @Enumerated(EnumType.STRING)
-    private SubjectType subjectType;
+	@NonNull
+	@Enumerated(EnumType.STRING)
+	private SubjectType subjectType;
 
-    @NonNull
-    private Integer creditHrs;
+	@NonNull
+	private Integer creditHrs;
 
-    @NonNull
-    private Boolean isElective;
+	@NonNull
+	private Boolean isElective;
 
-    @ManyToOne
-    @JoinColumn(name = "classId")
-    @JsonIgnoreProperties({
-            "students",
-            "subjects",
-            "attendance"
-    })
-    private Classes classes;
+	@ManyToOne
+	@JoinColumn(name = "classId")
+	private Classes classes;
 
-    @ManyToOne
-    @JoinColumn(name = "teacherId")
-    @JsonIgnoreProperties({
-            "subjects",
-            "classes",
-            "user"
-    })
-    private Teachers teacher;
+	@ManyToOne
+	@JoinColumn(name = "teacherId")
+	@JsonIgnoreProperties({ "subjects", "classes" })
+	private Teachers teacher;
 
-    @OneToMany(mappedBy = "subjects")
-    @JsonIgnore
-    private List<ExamSubjects>
-            examSubjects;
+	@OneToMany(mappedBy = "subjects")
+	@JsonIgnore
+	private List<ExamSubjects> examSubjects;
 
-    @OneToMany(mappedBy = "subject")
-    @JsonIgnore
-    private List<Timetable>
-            timetables;
+	@OneToMany(mappedBy = "subject")
+	@JsonIgnore
+	private List<Timetable> timetables;
 }

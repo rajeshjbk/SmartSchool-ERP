@@ -47,7 +47,7 @@ public class Timetable {
 
 	@ManyToOne
 	@JoinColumn(name = "teacherId")
-	@JsonIgnoreProperties({ "subjects", "classes", "timetables", "user" })
+	@JsonIgnoreProperties({ "subjects", "classes", "timetables"})
 	private Teachers teachers;
 
 	@NonNull

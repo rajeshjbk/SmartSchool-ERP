@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 import com.raj.schoolerp.DTO.SubjectsDTO;
 import com.raj.schoolerp.exception.SubjectsException;
 import com.raj.schoolerp.model.Classes;
+import com.raj.schoolerp.model.Students;
 import com.raj.schoolerp.model.Subjects;
 import com.raj.schoolerp.model.Teachers;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.repository.ClassesRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
 import com.raj.schoolerp.repository.SubjectsRepository;
 import com.raj.schoolerp.repository.TeachersRepository;
+import com.raj.schoolerp.repository.UsersRepository;
 import com.raj.schoolerp.service.SubjectsService;
 
 @Service
@@ -21,6 +25,12 @@ public class SubjectsServiceImpl implements SubjectsService {
 
 	@Autowired
 	private SubjectsRepository subjectsRepo;
+
+	@Autowired
+	private UsersRepository usersRepo;
+
+	@Autowired
+	private StudentsRepository studentRepo;
 
 	@Autowired
 	private TeachersRepository teachersRepository;
@@ -179,6 +189,24 @@ public class SubjectsServiceImpl implements SubjectsService {
 		if (subjects.isEmpty()) {
 
 			throw new SubjectsException("No Core Subjects Found");
+		}
+
+		return subjects;
+	}
+
+	@Override
+	public List<Subjects> getMySubjects(String username) throws SubjectsException {
+		// Get User
+		Users user = usersRepo.findByUserName(username).orElseThrow(() -> new SubjectsException("User Not Found"));
+
+		// Get Student
+		Students student = studentRepo.findByUser(user).orElseThrow(() -> new SubjectsException("Student Not Found"));
+
+		// Get Subjects by Class
+		List<Subjects> subjects = subjectsRepo.findByClassesClassId(student.getClasses().getClassId());
+
+		if (subjects.isEmpty()) {
+			throw new SubjectsException("No subjects found");
 		}
 
 		return subjects;

@@ -30,4 +30,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	// Get Users By Ids
 	@Query("SELECT u FROM Users u " + "WHERE u.userId IN :userIds")
 	List<Users> findUsersByIds(@Param("userIds") List<Long> userIds);
+	
+	Optional<Users> findByUserName(String userName);
 }

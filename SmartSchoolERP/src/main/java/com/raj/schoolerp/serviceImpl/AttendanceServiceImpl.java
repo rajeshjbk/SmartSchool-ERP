@@ -173,4 +173,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 		return attendance;
 	}
+
+	@Override
+	public List<Attendance> getAttendanceByParent(Long parentId) throws AttendanceException {
+
+		List<Attendance> attendance = attendanceRepo.getAttendanceByParent(parentId);
+
+		if (attendance.isEmpty()) {
+			throw new AttendanceException("No attendance found");
+		}
+
+		return attendance;
+	}
 }

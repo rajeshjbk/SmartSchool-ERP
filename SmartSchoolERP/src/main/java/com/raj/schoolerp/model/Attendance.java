@@ -61,6 +61,6 @@ public class Attendance {
 
 	@ManyToOne
 	@JoinColumn(name = "classId")
-	@JsonIgnoreProperties({ "students", "subjects" })
+	@JsonIgnoreProperties({ "students"})
 	private Classes classes;
 }

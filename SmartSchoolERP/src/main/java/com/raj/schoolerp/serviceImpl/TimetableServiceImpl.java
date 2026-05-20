@@ -10,13 +10,17 @@ import com.raj.schoolerp.DTO.TimetableDTO;
 import com.raj.schoolerp.exception.TimetableException;
 import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.DayOfWeek;
+import com.raj.schoolerp.model.Students;
 import com.raj.schoolerp.model.Subjects;
 import com.raj.schoolerp.model.Teachers;
 import com.raj.schoolerp.model.Timetable;
+import com.raj.schoolerp.model.Users;
 import com.raj.schoolerp.repository.ClassesRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
 import com.raj.schoolerp.repository.SubjectsRepository;
 import com.raj.schoolerp.repository.TeachersRepository;
 import com.raj.schoolerp.repository.TimetableRepository;
+import com.raj.schoolerp.repository.UsersRepository;
 import com.raj.schoolerp.service.TimetableService;
 
 @Service
@@ -26,14 +30,20 @@ public class TimetableServiceImpl implements TimetableService {
 	private TimetableRepository timetableRepo;
 
 	@Autowired
+	private UsersRepository usersRepo;
+
+	@Autowired
+	private StudentsRepository studentsRepo;
+
+	@Autowired
 	private SubjectsRepository subjectsRepository;
-	
+
 	@Autowired
 	private ClassesRepository classesRepository;
-	
+
 	@Autowired
 	private TeachersRepository teachersRepository;
-	
+
 	@Override
 	public Timetable addTimetable(TimetableDTO timetableDTO) throws TimetableException {
 
@@ -44,15 +54,15 @@ public class TimetableServiceImpl implements TimetableService {
 		// Fetch Class
 		List<Classes> classes = classesRepository.findAllById(timetableDTO.getClassIds());
 
-		if(classes.isEmpty()) {
-			
+		if (classes.isEmpty()) {
+
 			throw new TimetableException("Classes Not Found");
 		}
-		
+
 		// Fetch Teacher
-				Teachers teacher = teachersRepository.findById(timetableDTO.getTeacherId())
-						.orElseThrow(() -> new TimetableException("Teacher Not Found"));
-				
+		Teachers teacher = teachersRepository.findById(timetableDTO.getTeacherId())
+				.orElseThrow(() -> new TimetableException("Teacher Not Found"));
+
 		// Fetch Subject
 		Subjects subject = subjectsRepository.findById(timetableDTO.getSubjectId())
 				.orElseThrow(() -> new TimetableException("Subject Not Found"));
@@ -78,11 +88,11 @@ public class TimetableServiceImpl implements TimetableService {
 		// Fetch Class
 		List<Classes> classes = classesRepository.findAllById(timetableDTO.getClassIds());
 
-		if(classes.isEmpty()) {
-			
+		if (classes.isEmpty()) {
+
 			throw new TimetableException("Class Not Found");
 		}
-		
+
 		// Fetch Subject
 		Subjects subject = subjectsRepository.findById(timetableDTO.getSubjectId())
 				.orElseThrow(() -> new TimetableException("Subject Not Found"));
@@ -186,5 +196,41 @@ public class TimetableServiceImpl implements TimetableService {
 		}
 
 		return timetables;
+	}
+
+	@Override
+	public List<Timetable> getStudentTimetable(Long userId) throws TimetableException {
+
+		// Fetch User
+		Users user = usersRepo.findById(userId).orElseThrow(() -> new TimetableException("User Not Found"));
+
+		// Fetch Student by User
+		Students student = studentsRepo.findByUser(user).orElseThrow(() -> new TimetableException("Student Not Found"));
+
+		// Check Class
+		if (student.getClasses() == null) {
+			throw new TimetableException("Student class not assigned");
+		}
+
+		// Get Timetable by Class
+		List<Timetable> timetableList = timetableRepo.findByClassesClassId(student.getClasses().getClassId());
+
+		if (timetableList.isEmpty()) {
+			throw new TimetableException("No timetable found");
+		}
+
+		return timetableList;
+	}
+
+	@Override
+	public List<Timetable> getParentTimetable(Long parentId) throws TimetableException {
+
+		List<Timetable> timetable = timetableRepo.getParentTimetable(parentId);
+
+		if (timetable.isEmpty()) {
+			throw new TimetableException("No Timetable Found");
+		}
+
+		return timetable;
 	}
 }

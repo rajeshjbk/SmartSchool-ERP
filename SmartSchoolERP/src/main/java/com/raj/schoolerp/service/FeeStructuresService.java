@@ -26,4 +26,8 @@ public interface FeeStructuresService {
 
 	// Get Fee Structures By Frequency
 	List<FeeStructures> getFeeStructuresByFrequency(Frequency frequency) throws FeeStructuresException;
+
+	public FeeStructures getFeeByStudentId(Long studentId) throws FeeStructuresException;
+
+	void deleteFeeStructure(Long feeStructId) throws FeeStructuresException;
 }

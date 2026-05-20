@@ -37,16 +37,19 @@ public interface LeaveApplicationsRepository extends JpaRepository<LeaveApplicat
 			""")
 	List<LeaveApplications> getTeacherLeaves();
 
-	// Parent Leave
 	@Query("""
 			SELECT l
 			FROM LeaveApplications l
-			WHERE l.user.userId =
+			WHERE l.user.userId IN
 			(
 			    SELECT s.user.userId
 			    FROM Students s
 			    WHERE s.parent.userId = :parentId
 			)
+			ORDER BY l.appliedOn DESC
 			""")
 	List<LeaveApplications> getParentLeaves(@Param("parentId") Long parentId);
+
+	List<LeaveApplications> findByUser_UserId(Long userId);
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.raj.schoolerp.model.Students;
 import com.raj.schoolerp.model.UserRole;
+import com.raj.schoolerp.model.Users;
 
 @Repository
 public interface StudentsRepository extends JpaRepository<Students, Long> {
@@ -32,7 +33,7 @@ public interface StudentsRepository extends JpaRepository<Students, Long> {
 			FROM Students s
 			WHERE s.parent.userId = :parentId
 			""")
-	Optional<Students> getStudentByParentId(@Param("parentId") Long parentId);
+	List<Students> getStudentByParentId(@Param("parentId") Long parentId);
 
 	// Teacher → Students by Class
 	@Query("""
@@ -50,4 +51,5 @@ public interface StudentsRepository extends JpaRepository<Students, Long> {
 			""")
 	Optional<Students> getStudentByUserId(@Param("userId") Long userId);
 
+	Optional<Students> findByUser(Users user);
 }

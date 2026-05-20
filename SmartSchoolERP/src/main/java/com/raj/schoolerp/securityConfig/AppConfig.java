@@ -73,46 +73,88 @@ public class AppConfig {
 					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
 					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
 					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**")
+					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**")
 			.hasRole("ADMIN")
 
 			.requestMatchers(HttpMethod.PUT, "/schoolerp/users/**", "/schoolerp/teachers/**",
 					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
 					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
 					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**")
+					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**")
 			.hasRole("ADMIN")
 
 			.requestMatchers(HttpMethod.DELETE, "/schoolerp/users/**", "/schoolerp/teachers/**",
 					"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
 					"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
 					"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**")
+					"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**",
+					"/schoolerp/notices/**")
 			.hasRole("ADMIN")
 
 			// ================= TEACHER =================
 
-			.requestMatchers(HttpMethod.POST, "/schoolerp/attendance/**", "/schoolerp/results/**",
-					"/schoolerp/notices/add", "/schoolerp/leave-applications/apply")
+			.requestMatchers(HttpMethod.POST,
+			        "/schoolerp/attendance/**",
+			        "/schoolerp/results/**",
+			        "/schoolerp/notices/add")
 			.hasAnyRole("ADMIN", "TEACHER")
 
-			.requestMatchers(HttpMethod.PUT, "/schoolerp/attendance/**", "/schoolerp/results/**")
+			.requestMatchers(HttpMethod.PUT, "/schoolerp/attendance/**", "/schoolerp/notices/**","/schoolerp/results/**")
 			.hasAnyRole("ADMIN", "TEACHER")
 
 			// ================= STUDENT =================
 
-			.requestMatchers(HttpMethod.POST, "/schoolerp/leave-applications/apply")
-			.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
+			.requestMatchers(HttpMethod.POST,
+			        "/schoolerp/leave-applications/apply")
+			.hasAnyRole(
+			        "ADMIN",
+			        "TEACHER",
+			        "STUDENT",
+			        "PARENT"
+			)
+			.requestMatchers(HttpMethod.PUT,
+			        "/schoolerp/leave-applications/**")
+			.hasAnyRole(
+			        "ADMIN",
+			        "TEACHER",
+			        "STUDENT",
+			        "PARENT"
+			)
+
+			// ================= PARENT =================
+
+			.requestMatchers(
+			        "/schoolerp/students/parent/**"
+			)
+			.hasAnyRole(
+			        "ADMIN",
+			        "PARENT"
+			)
 
 			// ================= COMMON GET =================
 
-			.requestMatchers(HttpMethod.GET, "/schoolerp/students/**", "/schoolerp/teachers/**",
-					"/schoolerp/classes/**", "/schoolerp/subjects/**", "/schoolerp/attendance/**",
-					"/schoolerp/results/**", "/schoolerp/timetable/**", "/schoolerp/books/**",
-					"/schoolerp/book-issues/**", "/schoolerp/fee-transactions/**",
-					"/schoolerp/fee-structures/**", "/schoolerp/notices/**", "/schoolerp/exams/**",
-					"/schoolerp/exam-subjects/**", "/schoolerp/leave-applications/**")
-			.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
+			.requestMatchers(HttpMethod.GET,
+			        "/schoolerp/students/**",
+			        "/schoolerp/teachers/**",
+			        "/schoolerp/classes/**",
+			        "/schoolerp/subjects/**",
+			        "/schoolerp/attendance/**",
+			        "/schoolerp/results/**",
+			        "/schoolerp/timetable/**",
+			        "/schoolerp/books/**",
+			        "/schoolerp/book-issues/**",
+			        "/schoolerp/fee-transactions/**",
+			        "/schoolerp/fee-structures/**",
+			        "/schoolerp/notices/**",
+			        "/schoolerp/exams/**",
+			        "/schoolerp/exam-subjects/**",
+			        "/schoolerp/leave-applications/**")
+			.hasAnyRole(
+			        "ADMIN",
+			        "TEACHER",
+			        "STUDENT",
+			        "PARENT"
+			)
 
 			.anyRequest().authenticated();
 		})

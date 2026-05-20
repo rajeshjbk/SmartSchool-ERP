@@ -1,6 +1,7 @@
 package com.raj.schoolerp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +21,14 @@ public interface FeeStructuresRepository extends JpaRepository<FeeStructures, Lo
 	// Get Fee Structures By Frequency
 	@Query("SELECT fs FROM FeeStructures fs " + "WHERE fs.frequency = :frequency")
 	List<FeeStructures> findFeeStructuresByFrequency(@Param("frequency") Frequency frequency);
+
+	// Get Fee Structures by Class Id
+	List<FeeStructures> findByClasses_ClassId(Long classId);
+
+	// Get Fee Structures by Frequency
+	List<FeeStructures> findByFrequency(Frequency frequency);
+
+	Optional<FeeStructures> findFirstByClasses_ClassId(Long classId);
+
 	
 }

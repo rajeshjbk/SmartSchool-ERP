@@ -38,4 +38,6 @@ public interface AttendanceService {
 
 	// Get Attendance Between Dates
 	List<Attendance> getAttendanceBetweenDates(Date startDate, Date endDate) throws AttendanceException;
+
+	public List<Attendance> getAttendanceByParent(Long parentId) throws AttendanceException;
 }

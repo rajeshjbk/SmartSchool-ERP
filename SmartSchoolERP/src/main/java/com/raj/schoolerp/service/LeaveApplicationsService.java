@@ -27,4 +27,8 @@ public interface LeaveApplicationsService {
 
 	// Get Leave Applications By Status
 	List<LeaveApplications> getLeaveApplicationsByStatus(LeaveStatus leaveStatus) throws LeaveApplicationsException;
+
+	public List<LeaveApplications> getParentLeaves(Long parentId)throws LeaveApplicationsException;
+	
+	void deleteLeave(Long leaveId) throws LeaveApplicationsException;
 }

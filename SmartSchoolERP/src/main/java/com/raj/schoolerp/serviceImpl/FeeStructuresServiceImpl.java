@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.raj.schoolerp.DTO.FeeStructuresDTO;
 import com.raj.schoolerp.exception.FeeStructuresException;
+import com.raj.schoolerp.model.Classes;
 import com.raj.schoolerp.model.FeeStructures;
 import com.raj.schoolerp.model.Frequency;
+import com.raj.schoolerp.model.Students;
+import com.raj.schoolerp.repository.ClassesRepository;
 import com.raj.schoolerp.repository.FeeStructuresRepository;
+import com.raj.schoolerp.repository.StudentsRepository;
 import com.raj.schoolerp.service.FeeStructuresService;
 
 @Service
@@ -19,26 +23,41 @@ public class FeeStructuresServiceImpl implements FeeStructuresService {
 	@Autowired
 	private FeeStructuresRepository feeStructuresRepo;
 
+	@Autowired
+	private ClassesRepository classesRepository;
+
+	@Autowired
+	private StudentsRepository studentsRepo;
+
 	@Override
-	public FeeStructures addFeeStructure(FeeStructuresDTO feeStructuresDTO) throws FeeStructuresException {
+	public FeeStructures addFeeStructure(FeeStructuresDTO dto) throws FeeStructuresException {
 
-		FeeStructures newFeeStructure = new FeeStructures();
+		FeeStructures fee = new FeeStructures();
 
-		BeanUtils.copyProperties(feeStructuresDTO, newFeeStructure);
+		BeanUtils.copyProperties(dto, fee);
 
-		return feeStructuresRepo.save(newFeeStructure);
+		Classes classes = classesRepository.findById(dto.getClassId())
+				.orElseThrow(() -> new FeeStructuresException("Class Not Found"));
+
+		fee.setClasses(classes);
+
+		return feeStructuresRepo.save(fee);
 	}
 
 	@Override
-	public FeeStructures updateFeeStructure(Long feeStructId, FeeStructuresDTO feeStructuresDTO)
-			throws FeeStructuresException {
+	public FeeStructures updateFeeStructure(Long feeId, FeeStructuresDTO dto) throws FeeStructuresException {
 
-		FeeStructures existFeeStructure = feeStructuresRepo.findById(feeStructId)
+		FeeStructures existFee = feeStructuresRepo.findById(feeId)
 				.orElseThrow(() -> new FeeStructuresException("Fee Structure Not Found"));
 
-		BeanUtils.copyProperties(feeStructuresDTO, existFeeStructure);
+		BeanUtils.copyProperties(dto, existFee);
 
-		return feeStructuresRepo.save(existFeeStructure);
+		Classes classes = classesRepository.findById(dto.getClassId())
+				.orElseThrow(() -> new FeeStructuresException("Class Not Found"));
+
+		existFee.setClasses(classes);
+
+		return feeStructuresRepo.save(existFee);
 	}
 
 	@Override
@@ -57,7 +76,7 @@ public class FeeStructuresServiceImpl implements FeeStructuresService {
 	@Override
 	public List<FeeStructures> getFeeStructuresByClassId(Long classId) throws FeeStructuresException {
 
-		List<FeeStructures> feeStructures = feeStructuresRepo.findFeeStructuresByClassId(classId);
+		List<FeeStructures> feeStructures = feeStructuresRepo.findByClasses_ClassId(classId);
 
 		if (feeStructures.isEmpty()) {
 
@@ -70,7 +89,7 @@ public class FeeStructuresServiceImpl implements FeeStructuresService {
 	@Override
 	public List<FeeStructures> getFeeStructuresByFrequency(Frequency frequency) throws FeeStructuresException {
 
-		List<FeeStructures> feeStructures = feeStructuresRepo.findFeeStructuresByFrequency(frequency);
+		List<FeeStructures> feeStructures = feeStructuresRepo.findByFrequency(frequency);
 
 		if (feeStructures.isEmpty()) {
 
@@ -78,5 +97,26 @@ public class FeeStructuresServiceImpl implements FeeStructuresService {
 		}
 
 		return feeStructures;
+	}
+
+	@Override
+	public FeeStructures getFeeByStudentId(Long studentId) throws FeeStructuresException {
+
+		Students student = studentsRepo.findById(studentId)
+				.orElseThrow(() -> new FeeStructuresException("Student Not Found"));
+
+		Classes studentClass = student.getClasses();
+
+		return feeStructuresRepo.findFirstByClasses_ClassId(studentClass.getClassId())
+				.orElseThrow(() -> new FeeStructuresException("Fee Structure Not Found"));
+	}
+
+	@Override
+	public void deleteFeeStructure(Long feeStructId) throws FeeStructuresException {
+
+		FeeStructures feeStructure = feeStructuresRepo.findById(feeStructId)
+				.orElseThrow(() -> new FeeStructuresException("Fee Structure not found with ID: " + feeStructId));
+
+		feeStructuresRepo.delete(feeStructure);
 	}
 }

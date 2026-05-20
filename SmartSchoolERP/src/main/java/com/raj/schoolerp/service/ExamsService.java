@@ -39,4 +39,8 @@ public interface ExamsService {
 
 	// Get Upcoming Exams
 	List<Exams> getUpcomingExams() throws ExamsException;
+
+	List<Exams> getMyExams(String username) throws ExamsException;
+
+	public List<Exams> getParentExams(Long parentId) throws ExamsException;
 }
