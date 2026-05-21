@@ -32,4 +32,5 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	List<Users> findUsersByIds(@Param("userIds") List<Long> userIds);
 	
 	Optional<Users> findByUserName(String userName);
+
 }
