@@ -38,10 +38,8 @@ public class AppConfig {
 
 							CorsConfiguration cfg = new CorsConfiguration();
 
-							// Allow frontend URLs
 							cfg.setAllowedOriginPatterns(Arrays.asList("*"));
 
-							// Allow methods
 							cfg.setAllowedMethods(Arrays.asList(
 									"GET",
 									"POST",
@@ -50,13 +48,10 @@ public class AppConfig {
 									"PATCH",
 									"OPTIONS"));
 
-							// Allow headers
 							cfg.setAllowedHeaders(Arrays.asList("*"));
 
-							// Expose JWT header
 							cfg.setExposedHeaders(Arrays.asList("Authorization"));
 
-							// Allow credentials
 							cfg.setAllowCredentials(true);
 
 							return cfg;
@@ -69,9 +64,10 @@ public class AppConfig {
 
 					auth
 
-							// Public APIs
+							// ================= PUBLIC APIs =================
 							.requestMatchers(
 									"/",
+									"/error",
 									"/swagger-ui/**",
 									"/v3/api-docs/**",
 									"/schoolerp/signIn",
@@ -85,7 +81,6 @@ public class AppConfig {
 							// ================= ADMIN =================
 
 							.requestMatchers(HttpMethod.POST,
-									"/schoolerp/users/**",
 									"/schoolerp/teachers/**",
 									"/schoolerp/students/**",
 									"/schoolerp/classes/**",
@@ -195,7 +190,6 @@ public class AppConfig {
 						new JwtTokenValidatorFilter(),
 						BasicAuthenticationFilter.class)
 
-				// Disable Browser Login Popup
 				.httpBasic(httpBasic -> httpBasic.disable())
 
 				.formLogin(form -> form.disable());
