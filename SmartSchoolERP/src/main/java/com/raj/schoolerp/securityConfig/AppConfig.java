@@ -26,8 +26,7 @@ public class AppConfig {
 		http
 
 				// Stateless Session
-				.sessionManagement(session -> session
-						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 				// CORS Configuration
 				.cors(cors -> {
@@ -41,13 +40,7 @@ public class AppConfig {
 
 							cfg.setAllowedOriginPatterns(Arrays.asList("*"));
 
-							cfg.setAllowedMethods(Arrays.asList(
-									"GET",
-									"POST",
-									"PUT",
-									"DELETE",
-									"PATCH",
-									"OPTIONS"));
+							cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 
 							cfg.setAllowedHeaders(Arrays.asList("*"));
 
@@ -66,114 +59,67 @@ public class AppConfig {
 					auth
 
 							// ================= PUBLIC APIs =================
-							.requestMatchers(
-									"/",
-									"/error",
-									"/swagger-ui/**",
-									"/v3/api-docs/**",
-									"/schoolerp/signIn",
+							.requestMatchers("/", "/error", "/swagger-ui/**", "/v3/api-docs/**", "/schoolerp/signIn",
 									"/schoolerp/users/add")
 							.permitAll()
 
 							// Allow preflight CORS request
-							.requestMatchers(HttpMethod.OPTIONS, "/**")
-							.permitAll()
+							.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
 							// ================= ADMIN =================
 
-							.requestMatchers(HttpMethod.POST,
-									"/schoolerp/teachers/**",
-									"/schoolerp/students/**",
-									"/schoolerp/classes/**",
-									"/schoolerp/subjects/**",
-									"/schoolerp/timetable/**",
-									"/schoolerp/books/**",
-									"/schoolerp/book-issues/**",
-									"/schoolerp/fee-structures/**",
-									"/schoolerp/fee-transactions/**",
-									"/schoolerp/exam-subjects/**",
+							.requestMatchers(HttpMethod.POST, "/schoolerp/teachers/**", "/schoolerp/students/**",
+									"/schoolerp/classes/**", "/schoolerp/subjects/**", "/schoolerp/timetable/**",
+									"/schoolerp/books/**", "/schoolerp/book-issues/**", "/schoolerp/fee-structures/**",
+									"/schoolerp/fee-transactions/**", "/schoolerp/exam-subjects/**",
 									"/schoolerp/exams/**")
 							.hasRole("ADMIN")
 
-							.requestMatchers(HttpMethod.PUT,
-									"/schoolerp/users/**",
-									"/schoolerp/teachers/**",
-									"/schoolerp/students/**",
-									"/schoolerp/classes/**",
-									"/schoolerp/subjects/**",
-									"/schoolerp/timetable/**",
-									"/schoolerp/books/**",
-									"/schoolerp/book-issues/**",
-									"/schoolerp/fee-structures/**",
-									"/schoolerp/fee-transactions/**",
-									"/schoolerp/exam-subjects/**",
-									"/schoolerp/exams/**")
+							.requestMatchers(HttpMethod.PUT, "/schoolerp/users/**", "/schoolerp/teachers/**",
+									"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
+									"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
+									"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
+									"/schoolerp/exam-subjects/**", "/schoolerp/exams/**")
 							.hasRole("ADMIN")
 
-							.requestMatchers(HttpMethod.DELETE,
-									"/schoolerp/users/**",
-									"/schoolerp/teachers/**",
-									"/schoolerp/students/**",
-									"/schoolerp/classes/**",
-									"/schoolerp/subjects/**",
-									"/schoolerp/timetable/**",
-									"/schoolerp/books/**",
-									"/schoolerp/book-issues/**",
-									"/schoolerp/fee-structures/**",
-									"/schoolerp/fee-transactions/**",
-									"/schoolerp/exam-subjects/**",
-									"/schoolerp/exams/**",
-									"/schoolerp/results/**",
+							.requestMatchers(HttpMethod.DELETE, "/schoolerp/users/**", "/schoolerp/teachers/**",
+									"/schoolerp/students/**", "/schoolerp/classes/**", "/schoolerp/subjects/**",
+									"/schoolerp/timetable/**", "/schoolerp/books/**", "/schoolerp/book-issues/**",
+									"/schoolerp/fee-structures/**", "/schoolerp/fee-transactions/**",
+									"/schoolerp/exam-subjects/**", "/schoolerp/exams/**", "/schoolerp/results/**",
 									"/schoolerp/notices/**")
 							.hasRole("ADMIN")
 
 							// ================= TEACHER =================
 
-							.requestMatchers(HttpMethod.POST,
-									"/schoolerp/attendance/**",
-									"/schoolerp/results/**",
+							.requestMatchers(HttpMethod.POST, "/schoolerp/attendance/**", "/schoolerp/results/**",
 									"/schoolerp/notices/add")
 							.hasAnyRole("ADMIN", "TEACHER")
 
-							.requestMatchers(HttpMethod.PUT,
-									"/schoolerp/attendance/**",
-									"/schoolerp/notices/**",
+							.requestMatchers(HttpMethod.PUT, "/schoolerp/attendance/**", "/schoolerp/notices/**",
 									"/schoolerp/results/**")
 							.hasAnyRole("ADMIN", "TEACHER")
 
 							// ================= STUDENT =================
 
-							.requestMatchers(HttpMethod.POST,
-									"/schoolerp/leave-applications/apply")
+							.requestMatchers(HttpMethod.POST, "/schoolerp/leave-applications/apply")
 							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
-							.requestMatchers(HttpMethod.PUT,
-									"/schoolerp/leave-applications/**")
+							.requestMatchers(HttpMethod.PUT, "/schoolerp/leave-applications/**")
 							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
 							// ================= PARENT =================
 
-							.requestMatchers("/schoolerp/students/parent/**")
-							.hasAnyRole("ADMIN", "PARENT")
+							.requestMatchers("/schoolerp/students/parent/**").hasAnyRole("ADMIN", "PARENT")
 
 							// ================= COMMON GET =================
 
-							.requestMatchers(HttpMethod.GET,
-									"/schoolerp/students/**",
-									"/schoolerp/teachers/**",
-									"/schoolerp/classes/**",
-									"/schoolerp/subjects/**",
-									"/schoolerp/attendance/**",
-									"/schoolerp/results/**",
-									"/schoolerp/timetable/**",
-									"/schoolerp/books/**",
-									"/schoolerp/book-issues/**",
-									"/schoolerp/fee-transactions/**",
-									"/schoolerp/fee-structures/**",
-									"/schoolerp/notices/**",
-									"/schoolerp/exams/**",
-									"/schoolerp/exam-subjects/**",
-									"/schoolerp/leave-applications/**")
+							.requestMatchers(HttpMethod.GET, "/schoolerp/students/**", "/schoolerp/teachers/**",
+									"/schoolerp/classes/**", "/schoolerp/subjects/**", "/schoolerp/attendance/**",
+									"/schoolerp/results/**", "/schoolerp/timetable/**", "/schoolerp/books/**",
+									"/schoolerp/book-issues/**", "/schoolerp/fee-transactions/**",
+									"/schoolerp/fee-structures/**", "/schoolerp/notices/**", "/schoolerp/exams/**",
+									"/schoolerp/exam-subjects/**", "/schoolerp/leave-applications/**")
 							.hasAnyRole("ADMIN", "TEACHER", "STUDENT", "PARENT")
 
 							.anyRequest().authenticated();
@@ -183,13 +129,9 @@ public class AppConfig {
 				.csrf(csrf -> csrf.disable())
 
 				// JWT Filters
-				.addFilterAfter(
-						new JwtTokensGeneratorFilter(),
-						BasicAuthenticationFilter.class)
+				.addFilterAfter(new JwtTokensGeneratorFilter(), BasicAuthenticationFilter.class)
 
-				.addFilterBefore(
-						new JwtTokenValidatorFilter(),
-						BasicAuthenticationFilter.class)
+				.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 
 				.httpBasic(Customizer.withDefaults())
 
