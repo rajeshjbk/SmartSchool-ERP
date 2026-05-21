@@ -25,9 +25,10 @@ public class AppConfig {
 		http
 
 				// Stateless Session
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.sessionManagement(session -> session
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-				// CORS
+				// CORS Configuration
 				.cors(cors -> {
 
 					cors.configurationSource(new CorsConfigurationSource() {
@@ -37,36 +38,48 @@ public class AppConfig {
 
 							CorsConfiguration cfg = new CorsConfiguration();
 
-							cfg.setAllowedOrigins(Arrays.asList(
-									"http://localhost:5173",
-									"https://smartschool-erp.onrender.com"));
+							// Allow frontend URLs
+							cfg.setAllowedOriginPatterns(Arrays.asList("*"));
 
+							// Allow methods
 							cfg.setAllowedMethods(Arrays.asList(
-									"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+									"GET",
+									"POST",
+									"PUT",
+									"DELETE",
+									"PATCH",
+									"OPTIONS"));
 
-							cfg.setAllowCredentials(true);
-
+							// Allow headers
 							cfg.setAllowedHeaders(Arrays.asList("*"));
 
+							// Expose JWT header
 							cfg.setExposedHeaders(Arrays.asList("Authorization"));
+
+							// Allow credentials
+							cfg.setAllowCredentials(true);
 
 							return cfg;
 						}
 					});
 				})
 
-				// Authorization
+				// Authorization Rules
 				.authorizeHttpRequests(auth -> {
 
 					auth
 
-							// PUBLIC APIs
+							// Public APIs
 							.requestMatchers(
 									"/",
 									"/swagger-ui/**",
 									"/v3/api-docs/**",
 									"/schoolerp/signIn",
 									"/schoolerp/users/add")
+							.permitAll()
+
+							// Allow preflight CORS request
+							.requestMatchers(HttpMethod.OPTIONS, "/**")
 							.permitAll()
 
 							// ================= ADMIN =================
@@ -174,11 +187,15 @@ public class AppConfig {
 				.csrf(csrf -> csrf.disable())
 
 				// JWT Filters
-				.addFilterAfter(new JwtTokensGeneratorFilter(), BasicAuthenticationFilter.class)
+				.addFilterAfter(
+						new JwtTokensGeneratorFilter(),
+						BasicAuthenticationFilter.class)
 
-				.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+				.addFilterBefore(
+						new JwtTokenValidatorFilter(),
+						BasicAuthenticationFilter.class)
 
-				// Disable browser popup login
+				// Disable Browser Login Popup
 				.httpBasic(httpBasic -> httpBasic.disable())
 
 				.formLogin(form -> form.disable());
